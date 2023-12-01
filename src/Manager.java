@@ -61,7 +61,7 @@ public class Manager {
     }
 
     public void createSubtask(Subtask subtask) {
-        taskCreator.createSubtask(subtaskHashMap, epicHashMap, subtask, id);
+        taskCreator.createSubtask(listOfTasks, subtask, id);
         id++;
     }
 

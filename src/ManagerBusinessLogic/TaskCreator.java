@@ -4,6 +4,7 @@ import Tasks.Epic;
 import Tasks.Subtask;
 import Tasks.Task;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -17,16 +18,19 @@ public class TaskCreator {
         taskHashMap.put(id, task);
     }
 
-    public void createSubtask(HashMap subtaskHashMap, HashMap epicHashMap, Subtask subtask, int id) {
-
+    public void createSubtask(ArrayList<HashMap> listOfTasks, Subtask subtask, int id) {
         EpicStatusVerification epicStatusVerification = new EpicStatusVerification();
-        subtask.setId(id);
-        subtaskHashMap.put(id, subtask);
-
+        HashMap subtaskHashMap = listOfTasks.get(2);
+        HashMap epicHashMap = listOfTasks.get(1);
         Epic epic = (Epic) epicHashMap.get(subtask.getEpicOwnerId());
+
+        subtask.setId(id);
+        subtaskHashMap.put(id,subtask);
+
         epic.getSubtasksList().add(subtask.getId());
         epicHashMap.put(epic.getId(), epic);
 
         epicStatusVerification.verifyStatus(epic, subtaskHashMap);
+
     }
 }
