@@ -1,4 +1,4 @@
-package ManagerUtilities;
+package ManagerBusinessLogic;
 
 import Tasks.Epic;
 import Tasks.Status;
@@ -19,25 +19,27 @@ public class EpicStatusVerification {
     public void verifyStatus(Epic epic, HashMap subtaskHashMap) {
 
         ArrayList<Integer> listOfSubTasks = epic.getSubtasksList();
-        int counterNewSubtasks = 0;
+        int counterSameStatus = 0;
+        Status firstSubtaskStatus = null;
 
         for (Integer idSubtask : listOfSubTasks) {
             Subtask subtask = (Subtask) subtaskHashMap.get(idSubtask);
+            firstSubtaskStatus = subtask.getSubtaskStatus();
 
-            if (subtask.getSubtaskStatus() == Status.IN_PROGRESS) {
-                epic.setEpicStatus(Status.IN_PROGRESS);
-                counterNewSubtasks = -1;
-                break;
-            } else if (subtask.getSubtaskStatus() == Status.NEW) {
-                counterNewSubtasks++;
+            for (Integer idsecondSubtask : listOfSubTasks) {
+                subtask = (Subtask) subtaskHashMap.get(idsecondSubtask);
+
+                if (firstSubtaskStatus != subtask.getSubtaskStatus()) {
+                    epic.setEpicStatus(Status.IN_PROGRESS);
+                    break;
+                } else {
+                    counterSameStatus++;
+                }
             }
+            break;
         }
-
-        if (counterNewSubtasks == epic.subtasksList.size()) {
-            epic.setEpicStatus(Status.NEW);
-        } else if (counterNewSubtasks == -1) {
-        } else {
-            epic.setEpicStatus(Status.DONE);
+        if (counterSameStatus == listOfSubTasks.size()) {
+            epic.setEpicStatus(firstSubtaskStatus);
         }
     }
 }

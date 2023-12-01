@@ -1,4 +1,4 @@
-package ManagerUtilities;
+package ManagerBusinessLogic;
 
 import Tasks.Epic;
 import Tasks.Task;
@@ -23,7 +23,7 @@ public class TaskGetter {
 
     public ArrayList getListOfSubtasks(HashMap subtaskHashMap, int id) {
         Epic epic = (Epic) subtaskHashMap.get(id);
-        ArrayList getList = epic.subtasksList;
+        ArrayList getList = epic.getSubtasksList();
         return getList;
     }
 

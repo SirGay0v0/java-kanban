@@ -1,4 +1,4 @@
-package ManagerUtilities;
+package ManagerBusinessLogic;
 
 import Tasks.Epic;
 import Tasks.Subtask;
@@ -21,7 +21,7 @@ public class TaskDeleter {
     public void deleteEpicById(HashMap epicHashMap, int epicId, HashMap subtaskHashMap) {
         Epic epic = (Epic) epicHashMap.get(epicId);
 
-        for (Integer subtaskId : epic.subtasksList) {
+        for (Integer subtaskId : epic.getSubtasksList()) {
             subtaskHashMap.remove(subtaskId);
         }
         epicHashMap.remove(epicId);
@@ -31,7 +31,7 @@ public class TaskDeleter {
         Subtask subtask = (Subtask) subtaskHashMap.get(subtaskId);
         Epic epic = (Epic) epicHashMap.get(subtask.getEpicOwnerId());
 
-        epic.subtasksList.remove(subtaskId);
+        epic.getSubtasksList().remove(subtaskId);
         subtaskHashMap.remove(subtaskId);
 
         EpicStatusVerification epicStatusVerification = new EpicStatusVerification();

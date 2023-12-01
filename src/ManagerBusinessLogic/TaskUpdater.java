@@ -1,4 +1,4 @@
-package ManagerUtilities;
+package ManagerBusinessLogic;
 
 import Tasks.Epic;
 import Tasks.Subtask;

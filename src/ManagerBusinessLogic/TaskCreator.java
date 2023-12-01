@@ -1,4 +1,4 @@
-package ManagerUtilities;
+package ManagerBusinessLogic;
 
 import Tasks.Epic;
 import Tasks.Subtask;
@@ -24,7 +24,7 @@ public class TaskCreator {
         subtaskHashMap.put(id, subtask);
 
         Epic epic = (Epic) epicHashMap.get(subtask.getEpicOwnerId());
-        epic.subtasksList.add(subtask.getId());
+        epic.getSubtasksList().add(subtask.getId());
         epicHashMap.put(epic.getId(), epic);
 
         epicStatusVerification.verifyStatus(epic, subtaskHashMap);
