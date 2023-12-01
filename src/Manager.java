@@ -17,15 +17,15 @@ import java.util.HashMap;
  */
 
 public class Manager {
-    ArrayList<HashMap> listOfTasks;
-    HashMap<Integer, Task> taskHashMap;
-    HashMap<Integer, Epic> epicHashMap;
-    HashMap<Integer, Subtask> subtaskHashMap;
-    TaskGetter taskGetter = new TaskGetter();
-    TaskCreator taskCreator = new TaskCreator();
-    TaskDeleter taskDeleter = new TaskDeleter();
-    TaskUpdater taskUpdater = new TaskUpdater();
-    int id = 0;
+    private ArrayList<HashMap> listOfTasks;
+    private HashMap<Integer, Task> taskHashMap;
+    private HashMap<Integer, Epic> epicHashMap;
+    private HashMap<Integer, Subtask> subtaskHashMap;
+    private TaskGetter taskGetter = new TaskGetter();
+    private TaskCreator taskCreator = new TaskCreator();
+    private TaskDeleter taskDeleter = new TaskDeleter();
+    private TaskUpdater taskUpdater = new TaskUpdater();
+    private int id = 0;
 
 
     public Manager() {

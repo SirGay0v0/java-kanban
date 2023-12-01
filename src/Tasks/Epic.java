@@ -5,11 +5,11 @@ import java.util.ArrayList;
 /**
  * Наследник класса Task с новыми полями.
  * Включает в себя List, где хранятся id Subtask принадлежащих этому Epic.
- * Статус NEW задается по умолчанию и меняется с появлением Subtask/
+ * Статус NEW задается по умолчанию и меняется с появлением Subtask.
  */
 public class Epic extends Task {
     private Status epicStatus;
-    public ArrayList<Integer> subtasksList;
+    private ArrayList<Integer> subtasksList;
 
     public Epic(String name, String description) {
         super(name, description);
