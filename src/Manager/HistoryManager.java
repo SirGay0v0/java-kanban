@@ -4,6 +4,9 @@ import Tasks.Task;
 
 import java.util.ArrayList;
 
+/**
+ * Интерфейс для InMemoryHistoryManager.
+ */
 public interface HistoryManager {
 
     void add(Task task);

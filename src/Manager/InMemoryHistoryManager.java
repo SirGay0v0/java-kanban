@@ -3,7 +3,10 @@ package Manager;
 import Tasks.Task;
 
 import java.util.ArrayList;
-
+/**
+ * Класс реализует интерфейса HistoryManager.
+ * Ведет учет истории просмотра в виде ArrayList<Task>.
+ */
 public class InMemoryHistoryManager implements HistoryManager {
     private int counter;
     private ArrayList<Task> listTaskHistory;

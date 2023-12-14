@@ -8,6 +8,18 @@ import Tasks.Task;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Класс реализует интерфейс TaskManager.
+ * Содержит основные команды для взаимодействия с программой.
+ * <p>
+ * Управляет всем взаимодействием с Task, Epic и Subtask.
+ * При инициализации создает один Список и три HashMap.
+ * Каждая HashMap хранит в себе объекты соответствующего типа.
+ * Список содержит в себе все HashMap под определенными индексами.
+ * Индексы используются в качестве параметров передаваемыми в методы по типу getTasks -
+ * метод получает индекс нужной HashMap и достает объекты конкретно из нее, не затрагивая
+ * остальные HashMap.
+ */
 public class InMemoryTaskManager implements TaskManager {
     private ArrayList<HashMap> listOfTasks;
     private HashMap<Integer, Task> taskHashMap;
