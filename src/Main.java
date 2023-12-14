@@ -83,5 +83,23 @@ public class Main {
         System.out.println(inMemoryTaskManager.getTasks());
         System.out.println(inMemoryTaskManager.getEpics());
         System.out.println(inMemoryTaskManager.getSubtasks());
+
+        inMemoryTaskManager.getTaskById(1);
+        inMemoryTaskManager.getTaskById(1);
+        inMemoryTaskManager.getTaskById(1);
+        inMemoryTaskManager.getTaskById(1);
+        inMemoryTaskManager.getTaskById(1);
+        inMemoryTaskManager.getTaskById(1);
+        inMemoryTaskManager.getTaskById(1);
+        inMemoryTaskManager.getTaskById(1);
+        inMemoryTaskManager.getTaskById(1);
+        inMemoryTaskManager.getEpicById(2);
+        inMemoryTaskManager.getTaskById(1);
+        inMemoryTaskManager.getTaskById(1);
+        inMemoryTaskManager.getTaskById(1);
+
+
+
+        System.out.println(inMemoryTaskManager.getHistory());
     }
 }

@@ -1,9 +1,6 @@
 package Manager;
 
-import ManagerBusinessLogic.TaskCreator;
-import ManagerBusinessLogic.TaskDeleter;
-import ManagerBusinessLogic.TaskGetter;
-import ManagerBusinessLogic.TaskUpdater;
+import ManagerBusinessLogic.*;
 import Tasks.Epic;
 import Tasks.Subtask;
 import Tasks.Task;
@@ -16,6 +13,7 @@ public class InMemoryTaskManager implements TaskManager {
     private HashMap<Integer, Task> taskHashMap;
     private HashMap<Integer, Epic> epicHashMap;
     private HashMap<Integer, Subtask> subtaskHashMap;
+    private TaskHistory taskHistory = new TaskHistory();
     private TaskGetter taskGetter = new TaskGetter();
     private TaskCreator taskCreator = new TaskCreator();
     private TaskDeleter taskDeleter = new TaskDeleter();
@@ -84,18 +82,21 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Task getTaskById(int id) {
         Task task = (Task) taskGetter.getById(listOfTasks, id, 0);
+        taskHistory.addToHistory(task);
         return task;
     }
 
     @Override
     public Epic getEpicById(int id) {
         Epic epic = (Epic) taskGetter.getById(listOfTasks, id, 1);
+        taskHistory.addToHistory(epic);
         return epic;
     }
 
     @Override
     public Subtask getSubtaskById(int id) {
         Subtask subtask = (Subtask) taskGetter.getById(listOfTasks, id, 2);
+        taskHistory.addToHistory(subtask);
         return subtask;
     }
 
@@ -134,5 +135,10 @@ public class InMemoryTaskManager implements TaskManager {
         ArrayList listOfSubtasks = taskGetter.getListOfSubtasks(epicHashMap, id);
 
         return listOfSubtasks;
+    }
+
+    @Override
+    public ArrayList<Task> getHistory() {
+        return taskHistory.getListTaskHistory();
     }
 }
