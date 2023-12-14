@@ -1,4 +1,5 @@
 import Manager.InMemoryTaskManager;
+import Manager.Managers;
 import Manager.TaskManager;
 import Tasks.Epic;
 import Tasks.Status;
@@ -8,7 +9,8 @@ import Tasks.Task;
  * Все проверки, которые были указаны в ТЗ прошли проверку без ошибок.*/
 public class Main {
     public static void main(String[] args) {
-        InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
+
+        TaskManager inMemoryTaskManager = Managers.getDefault();
         Task task;
         Epic epic;
         Subtask subtask;
@@ -97,8 +99,6 @@ public class Main {
         inMemoryTaskManager.getTaskById(1);
         inMemoryTaskManager.getTaskById(1);
         inMemoryTaskManager.getTaskById(1);
-
-
 
         System.out.println(inMemoryTaskManager.getHistory());
     }
