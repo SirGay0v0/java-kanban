@@ -1,23 +1,20 @@
-package ManagerBusinessLogic;
+package Manager;
 
 import Tasks.Task;
 
 import java.util.ArrayList;
 
-public class TaskHistory {
+public class InMemoryHistoryManager implements HistoryManager {
     private int counter;
     private ArrayList<Task> listTaskHistory;
 
-    public TaskHistory() {
+    public InMemoryHistoryManager() {
         counter = 0;
         listTaskHistory = new ArrayList<>();
     }
 
-    public ArrayList<Task> getListTaskHistory() {
-        return listTaskHistory;
-    }
-
-    public void addToHistory(Task task) {
+    @Override
+    public void add(Task task) {
         if (counter == 10) {
             listTaskHistory.remove(0);
             listTaskHistory.add(task);
@@ -25,5 +22,10 @@ public class TaskHistory {
             listTaskHistory.add(task);
             counter++;
         }
+    }
+
+    @Override
+    public ArrayList getHistory() {
+        return listTaskHistory;
     }
 }

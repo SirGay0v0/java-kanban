@@ -1,3 +1,4 @@
+import Manager.HistoryManager;
 import Manager.InMemoryTaskManager;
 import Manager.Managers;
 import Manager.TaskManager;
@@ -5,12 +6,15 @@ import Tasks.Epic;
 import Tasks.Status;
 import Tasks.Subtask;
 import Tasks.Task;
+
 /**
- * Все проверки, которые были указаны в ТЗ прошли проверку без ошибок.*/
+ * Все проверки, которые были указаны в ТЗ прошли проверку без ошибок.
+ */
 public class Main {
     public static void main(String[] args) {
-
         TaskManager inMemoryTaskManager = Managers.getDefault();
+        HistoryManager inMemoryHistoryManager = Managers.getDefaultHistory();
+
         Task task;
         Epic epic;
         Subtask subtask;
@@ -100,6 +104,6 @@ public class Main {
         inMemoryTaskManager.getTaskById(1);
         inMemoryTaskManager.getTaskById(1);
 
-        System.out.println(inMemoryTaskManager.getHistory());
+        System.out.println(inMemoryHistoryManager.getHistory());
     }
 }

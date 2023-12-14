@@ -58,6 +58,5 @@ public interface TaskManager {
 
     ArrayList getAllSubtasksFromEpic(int id);
 
-    ArrayList getHistory();
 }
 
