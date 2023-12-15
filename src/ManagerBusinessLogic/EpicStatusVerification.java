@@ -5,7 +5,9 @@ import Tasks.Status;
 import Tasks.Subtask;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Класс отвечает за корректный статус отображения Epic.
@@ -16,9 +18,9 @@ import java.util.HashMap;
  */
 public class EpicStatusVerification {
 
-    public void verifyStatus(Epic epic, HashMap subtaskHashMap) {
+    public void verifyStatus(Epic epic, Map subtaskHashMap) {
 
-        ArrayList<Integer> listOfSubTasks = epic.getSubtasksList();
+        Collection<Integer> listOfSubTasks = epic.getIdSubTasks();
         int counterSameStatus = 0;
         Status firstSubtaskStatus = null;
 

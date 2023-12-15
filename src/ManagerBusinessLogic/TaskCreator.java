@@ -6,6 +6,7 @@ import Tasks.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Класс отвечает зав создание Task, Epic и отдельно для Subtask, так как после создания
@@ -13,7 +14,7 @@ import java.util.HashMap;
  * для присвоения корректного статуса экземпляру класса Epic.
  */
 public class TaskCreator {
-    public void createTask(HashMap taskHashMap, Task task, int id) {
+    public void createTask(Map taskHashMap, Task task, int id) {
         task.setId(id);
         taskHashMap.put(id, task);
     }
@@ -27,7 +28,7 @@ public class TaskCreator {
         subtask.setId(id);
         subtaskHashMap.put(id,subtask);
 
-        epic.getSubtasksList().add(subtask.getId());
+        epic.getIdSubTasks().add(subtask.getId());
         epicHashMap.put(epic.getId(), epic);
 
         epicStatusVerification.verifyStatus(epic, subtaskHashMap);

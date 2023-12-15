@@ -1,6 +1,7 @@
 package Tasks;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Наследник класса Task с новыми полями.
@@ -9,12 +10,12 @@ import java.util.ArrayList;
  */
 public class Epic extends Task {
     private Status epicStatus;
-    private ArrayList<Integer> subtasksList;
+    private Collection<Integer> idSubTasks;
 
     public Epic(String name, String description) {
         super(name, description);
+        idSubTasks = new ArrayList<>();
         setEpicStatus(Status.NEW);
-        subtasksList = new ArrayList<>();
     }
 
     public Status getEpicStatus() {
@@ -25,12 +26,12 @@ public class Epic extends Task {
         this.epicStatus = epicStatus;
     }
 
-    public ArrayList<Integer> getSubtasksList() {
-        return subtasksList;
+    public Collection<Integer> getIdSubTasks() {
+        return idSubTasks;
     }
 
-    public void setSubtasksList(ArrayList<Integer> subtasksList) {
-        this.subtasksList = subtasksList;
+    public void setIdSubTasks(Collection<Integer> idSubTasks) {
+        this.idSubTasks = idSubTasks;
     }
 
     @Override
@@ -40,7 +41,7 @@ public class Epic extends Task {
                 ", description='" + getDescription() + '\'' +
                 ", id=" + getId() +
                 ", epicStatus=" + getEpicStatus() +
-                ", subtasksList=" + getSubtasksList() +
+                ", subtasksList=" + getIdSubTasks() +
                 '}';
     }
 }

@@ -4,7 +4,9 @@ import Tasks.Epic;
 import Tasks.Task;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Класс возвращает список всех объектов запрашиваемого класса.
@@ -12,8 +14,8 @@ import java.util.HashMap;
  * Третий метод возвращает объект по его id;
  */
 public class TaskGetter {
-    public ArrayList<Task> getAllTasks(ArrayList<HashMap> listOfTasks, int option) {
-        ArrayList<Task> listOfFoundTasks = new ArrayList<Task>();
+    public Collection<Task> getAllTasks(ArrayList<HashMap> listOfTasks, int option) {
+        Collection<Task> listOfFoundTasks = new ArrayList<>();
 
         for (Object task : listOfTasks.get(option).values()) {
             listOfFoundTasks.add((Task) task);
@@ -21,9 +23,9 @@ public class TaskGetter {
         return listOfFoundTasks;
     }
 
-    public ArrayList getListOfSubtasks(HashMap subtaskHashMap, int id) {
+    public Collection getListOfSubtasks(Map subtaskHashMap, int id) {
         Epic epic = (Epic) subtaskHashMap.get(id);
-        ArrayList getList = epic.getSubtasksList();
+        Collection getList = epic.getIdSubTasks();
         return getList;
     }
 

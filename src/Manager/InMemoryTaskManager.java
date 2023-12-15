@@ -6,7 +6,9 @@ import Tasks.Subtask;
 import Tasks.Task;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Класс реализует интерфейс TaskManager.
@@ -22,9 +24,9 @@ import java.util.HashMap;
  */
 public class InMemoryTaskManager implements TaskManager {
     private ArrayList<HashMap> listOfTasks;
-    private HashMap<Integer, Task> taskHashMap;
-    private HashMap<Integer, Epic> epicHashMap;
-    private HashMap<Integer, Subtask> subtaskHashMap;
+    private Map<Integer, Task> taskHashMap;
+    private Map<Integer, Epic> epicHashMap;
+    private Map<Integer, Subtask> subtaskHashMap;
     private HistoryManager inMemoryHistoryManager = Managers.getDefaultHistory();
     private TaskGetter taskGetter = new TaskGetter();
     private TaskCreator taskCreator = new TaskCreator();
@@ -38,9 +40,9 @@ public class InMemoryTaskManager implements TaskManager {
         epicHashMap = new HashMap<>();
         subtaskHashMap = new HashMap<>();
         listOfTasks = new ArrayList<>();
-        listOfTasks.add(0, taskHashMap);
-        listOfTasks.add(1, epicHashMap);
-        listOfTasks.add(2, subtaskHashMap);
+        listOfTasks.add(0, (HashMap) taskHashMap);
+        listOfTasks.add(1, (HashMap) epicHashMap);
+        listOfTasks.add(2, (HashMap) subtaskHashMap);
     }
 
     @Override
@@ -62,17 +64,17 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public ArrayList getTasks() {
+    public Collection getTasks() {
         return taskGetter.getAllTasks(listOfTasks, 0);
     }
 
     @Override
-    public ArrayList getEpics() {
+    public Collection getEpics() {
         return taskGetter.getAllTasks(listOfTasks, 1);
     }
 
     @Override
-    public ArrayList getSubtasks() {
+    public Collection getSubtasks() {
         return taskGetter.getAllTasks(listOfTasks, 2);
     }
 
@@ -144,8 +146,8 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public ArrayList getAllSubtasksFromEpic(int id) {
-        ArrayList listOfSubtasks = taskGetter.getListOfSubtasks(epicHashMap, id);
+    public Collection<Integer> getAllSubtasksFromEpic(int id) {
+        Collection listOfSubtasks = taskGetter.getListOfSubtasks(epicHashMap, id);
         return listOfSubtasks;
     }
 }
