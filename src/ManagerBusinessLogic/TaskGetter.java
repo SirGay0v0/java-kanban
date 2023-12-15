@@ -12,8 +12,8 @@ import java.util.HashMap;
  * Третий метод возвращает объект по его id;
  */
 public class TaskGetter {
-    public ArrayList getAllTasks(ArrayList<HashMap> listOfTasks, int option) {
-        ArrayList<Task> listOfFoundTasks = new ArrayList<>();
+    public ArrayList<Task> getAllTasks(ArrayList<HashMap> listOfTasks, int option) {
+        ArrayList<Task> listOfFoundTasks = new ArrayList<Task>();
 
         for (Object task : listOfTasks.get(option).values()) {
             listOfFoundTasks.add((Task) task);
