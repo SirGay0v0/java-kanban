@@ -1,7 +1,4 @@
-import Manager.HistoryManager;
-import Manager.InMemoryTaskManager;
-import Manager.Managers;
-import Manager.TaskManager;
+import Manager.*;
 import Tasks.Epic;
 import Tasks.Status;
 import Tasks.Subtask;
@@ -13,7 +10,8 @@ import Tasks.Task;
 public class Main {
     public static void main(String[] args) {
         TaskManager inMemoryTaskManager = Managers.getDefault();
-        HistoryManager inMemoryHistoryManager = Managers.getDefaultHistory();
+//        HistoryManager inMemoryHistoryManager = Managers.getDefaultHistory();
+
 
         Task task;
         Epic epic;
@@ -62,7 +60,7 @@ public class Main {
 
         epic = new Epic("Second epic", "Redescription");
         epic.setId(3);
-        epic.setSubtasksList(inMemoryTaskManager.getAllSubtasksFromEpic(3));
+        epic.setIdSubTasks(inMemoryTaskManager.getAllSubtasksFromEpic(3));
         inMemoryTaskManager.updateEpic(epic, 3);
 
         System.out.println(inMemoryTaskManager.getEpics());
@@ -104,6 +102,6 @@ public class Main {
         inMemoryTaskManager.getTaskById(1);
         inMemoryTaskManager.getTaskById(1);
 
-        System.out.println(inMemoryHistoryManager.getHistory());
+        System.out.println(inMemoryTaskManager.getHistory());
     }
 }
