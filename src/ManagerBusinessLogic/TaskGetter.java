@@ -3,10 +3,7 @@ package ManagerBusinessLogic;
 import Tasks.Epic;
 import Tasks.Task;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Класс возвращает список всех объектов запрашиваемого класса.
@@ -14,12 +11,10 @@ import java.util.Map;
  * Третий метод возвращает объект по его id;
  */
 public class TaskGetter {
-    public Collection<Task> getAllTasks(ArrayList<HashMap> listOfTasks, int option) {
+    public Collection<Task> getAllTasks(List<HashMap<String, ? extends Task>> listOfTasks, int option) {
         Collection<Task> listOfFoundTasks = new ArrayList<>();
 
-        for (Object task : listOfTasks.get(option).values()) {
-            listOfFoundTasks.add((Task) task);
-        }
+        listOfFoundTasks.addAll(listOfTasks.get(option).values());
         return listOfFoundTasks;
     }
 
