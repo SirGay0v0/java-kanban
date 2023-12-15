@@ -10,7 +10,6 @@ import java.util.LinkedList;
  * Ведет учет истории просмотра в виде ArrayList<Task>.
  */
 public class InMemoryHistoryManager implements HistoryManager {
-    private int counter;
     private LinkedList<Task> listTaskHistory;
 
     public InMemoryHistoryManager() {
