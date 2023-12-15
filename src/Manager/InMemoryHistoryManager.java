@@ -30,4 +30,11 @@ public class InMemoryHistoryManager implements HistoryManager {
     public LinkedList<Task> getHistory() {
         return listTaskHistory;
     }
+
+    @Override
+    public String toString() {
+        return "InMemoryHistoryManager{" +
+                "listTaskHistory=" + listTaskHistory +
+                '}';
+    }
 }

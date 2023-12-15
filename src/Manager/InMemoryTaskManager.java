@@ -35,7 +35,7 @@ public class InMemoryTaskManager implements TaskManager {
     private int id = 0;
 
 
-    public InMemoryTaskManager() {
+    public InMemoryTaskManager(HistoryManager inMemoryHistoryManager) {
         taskHashMap = new HashMap<>();
         epicHashMap = new HashMap<>();
         subtaskHashMap = new HashMap<>();
@@ -43,6 +43,7 @@ public class InMemoryTaskManager implements TaskManager {
         listOfTasks.add(0, (HashMap) taskHashMap);
         listOfTasks.add(1, (HashMap) epicHashMap);
         listOfTasks.add(2, (HashMap) subtaskHashMap);
+        inMemoryHistoryManager = new InMemoryHistoryManager();
     }
 
     @Override

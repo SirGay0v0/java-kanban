@@ -6,10 +6,9 @@ package Manager;
 public class Managers {
 
     private static final HistoryManager inMemoryHistoryManager = new InMemoryHistoryManager();
-    private static final TaskManager inMemoryTaskManager = new InMemoryTaskManager();
 
     public static TaskManager getDefault() {
-        return inMemoryTaskManager;
+        return new InMemoryTaskManager(getDefaultHistory());
     }
 
     public static HistoryManager getDefaultHistory() {
