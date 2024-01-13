@@ -88,10 +88,13 @@ public class Main {
         System.out.println(inMemoryTaskManager.getEpics());
         System.out.println(inMemoryTaskManager.getSubtasks());
 
+        System.out.println();
+        System.out.println();
+
         inMemoryTaskManager.getTaskById(1);
         inMemoryTaskManager.getTaskById(1);
         inMemoryTaskManager.getTaskById(1);
-        inMemoryTaskManager.getTaskById(1);
+        inMemoryTaskManager.getEpicById(2);
         inMemoryTaskManager.getTaskById(1);
         inMemoryTaskManager.getTaskById(1);
         inMemoryTaskManager.getTaskById(1);
@@ -100,8 +103,16 @@ public class Main {
         inMemoryTaskManager.getEpicById(2);
         inMemoryTaskManager.getTaskById(1);
         inMemoryTaskManager.getTaskById(1);
-        inMemoryTaskManager.getTaskById(1);
+        inMemoryTaskManager.getEpicById(2);
 
         System.out.println(inMemoryTaskManager.getHistory());
+
+        inMemoryTaskManager.deleteTaskById(1);
+
+        System.out.println();
+        System.out.println();
+
+        System.out.println(inMemoryTaskManager.getHistory());
+
     }
 }
