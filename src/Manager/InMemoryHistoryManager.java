@@ -3,6 +3,7 @@ package Manager;
 import Custom.Node;
 import Tasks.Task;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -49,7 +50,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
 
-    class CustomLinkedList<T> {
+    public static class CustomLinkedList<T> {
 
         private int size = 0;
         private Node<T> head;
@@ -59,53 +60,24 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
 
         public void addLast(T element) {
-            // Реализуйте метод
             final Node<T> oldTail = tail;
-            final Node<T> newNode = new Node<>(null, element, oldTail);
+            final Node<T> newNode = new Node<>(oldTail, element, null);
             tail = newNode;
-            if (oldTail == null)
-                head = newNode;
-            else oldTail.prev = newNode;
+            if (oldTail == null) head = newNode;
+            else oldTail.next = newNode;
             size++;
         }
 
-        public void 
-//        Node<E> node(int index) {
-//            // assert isElementIndex(index);
-//
-//            if (index < (size >> 1)) {
-//                Node<E> x = head;
-//                for (int i = 0; i < index; i++)
-//                    x = x.next;
-//                return x;
-//            } else {
-//                Node<E> x = tail;
-//                for (int i = size - 1; i > index; i--)
-//                    x = x.prev;
-//                return x;
-//            }
-//        }
-//
-//        public E get(int index) {
-//            return node(index).data;
-//        }
-//
-//        public void linkLast(E element) {
-//            final var oldTail = tail;
-//            final var newNode = new Node<E>(null, element, oldTail);
-//            tail = newNode;
-//            if (oldTail == null)
-//                head = newNode;
-//            else oldTail.prev = newNode;
-//            size++;
-//        }
-//
-//        public List<Task> getTasks(){
-//            List<Task> listTasks = new ArrayList<>();
-//            for(int i=0; i<size; i++){
-//             listTasks.add((Task) node(i).data);
-//            }
-//            return listTasks;
-//        }
+        public List<Task> getTasks() {
+            List<Task> historyList = new ArrayList<>();
+            Node<T> current = head;
+
+            while (current != tail) {
+                historyList.add((Task) current.item);
+                current = current.next;
+            }
+            historyList.add((Task) current.item);
+            return historyList;
+        }
     }
 }
