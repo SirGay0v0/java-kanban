@@ -26,7 +26,7 @@ public class TaskCreator {
         Epic epic = (Epic) epicHashMap.get(subtask.getEpicOwnerId());
 
         subtask.setId(id);
-        subtaskHashMap.put(id,subtask);
+        subtaskHashMap.put(id, subtask);
 
         epic.getIdSubTasks().add(subtask.getId());
         epicHashMap.put(epic.getId(), epic);

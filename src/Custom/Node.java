@@ -1,9 +1,14 @@
 package Custom;
 
-import Manager.InMemoryHistoryManager;
-
+/**
+ * Класс реализует концепцию звена для CustomLinkedList.
+ * Представляет собой звено из 3-ех частей:
+ * 1. Это сам элемент/объект и т.д.
+ * 2. Это ссылка на следующее звено
+ * 3. Это ссылка на предыдущее звено
+ */
 public class Node<E> {
-   public E item;
+    public E item;
     public Node<E> next;
     public Node<E> prev;
 
@@ -11,6 +16,7 @@ public class Node<E> {
         this.item = element;
         this.next = next;
         this.prev = prev;
+
     }
 }
 

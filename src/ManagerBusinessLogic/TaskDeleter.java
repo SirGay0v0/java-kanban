@@ -1,9 +1,10 @@
 package ManagerBusinessLogic;
 
+
+import Manager.HistoryManager;
 import Tasks.Epic;
 import Tasks.Subtask;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -19,10 +20,15 @@ public class TaskDeleter {
         taskHashMap.remove(id);
     }
 
-    public void deleteEpicById(Map epicHashMap, int epicId, Map subtaskHashMap) {
+    /**
+     * Теперь у метода новый аргумент, который позволяет стирать информацию из истории по мере удаления
+     * SubTask принадлежащих этому Epic
+     */
+    public void deleteEpicById(Map epicHashMap, int epicId, Map subtaskHashMap, HistoryManager inMemoryHistoryManager) {
         Epic epic = (Epic) epicHashMap.get(epicId);
 
         for (Integer subtaskId : epic.getIdSubTasks()) {
+            inMemoryHistoryManager.remove(subtaskId);
             subtaskHashMap.remove(subtaskId);
         }
         epicHashMap.remove(epicId);
