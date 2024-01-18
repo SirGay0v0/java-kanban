@@ -43,10 +43,6 @@ public class InMemoryTaskManager implements TaskManager {
         this.inMemoryHistoryManager = inMemoryHistoryManager;
     }
 
-    public HistoryManager getInMemoryHistoryManager() {
-        return inMemoryHistoryManager;
-    }
-
     @Override
     public void createTask(Task task) {
         taskCreator.createTask(taskHashMap, task, id);
@@ -138,10 +134,13 @@ public class InMemoryTaskManager implements TaskManager {
         inMemoryHistoryManager.remove(id);
     }
 
+    /**
+     * Пришлось добавить новый аргумент к методу deleteEpicById
+     */
     @Override
     public void deleteEpicById(int id) {
         inMemoryHistoryManager.remove(id);
-        taskDeleter.deleteEpicById(epicHashMap, id, subtaskHashMap);
+        taskDeleter.deleteEpicById(epicHashMap, id, subtaskHashMap, inMemoryHistoryManager);
     }
 
     @Override

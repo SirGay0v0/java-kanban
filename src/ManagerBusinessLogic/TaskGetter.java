@@ -24,7 +24,7 @@ public class TaskGetter {
         return getList;
     }
 
-    public Object getById(ArrayList<HashMap> listOfTasks, int id, int option){
+    public Object getById(ArrayList<HashMap> listOfTasks, int id, int option) {
         return listOfTasks.get(option).get(id);
     }
 }

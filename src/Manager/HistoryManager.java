@@ -2,17 +2,15 @@ package Manager;
 
 import Tasks.Task;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Интерфейс для InMemoryHistoryManager.
  */
 public interface HistoryManager {
-
     void add(Task task);
 
     void remove(int id);
 
-    LinkedList<Task> getHistory();
+    List<Task> getHistory();
 }

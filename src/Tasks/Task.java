@@ -1,9 +1,11 @@
 package Tasks;
 
 import java.util.Objects;
+
 /**
  * Класс родитель.
- * Содержит все общие поля и 2 конструктора: Для себя и общий для наследников.*/
+ * Содержит все общие поля и 2 конструктора: Для себя и общий для наследников.
+ */
 public class Task {
     private String name;
     private String description;
@@ -19,14 +21,6 @@ public class Task {
     public Task(String name, String description) {
         this.name = name;
         this.description = description;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setTaskStatus(Status taskStatus) {
-        this.taskStatus = taskStatus;
     }
 
     public Status getTaskStatus() {
@@ -64,11 +58,6 @@ public class Task {
 
     @Override
     public String toString() {
-        return "\nTask{" +
-                "name='" + getName() + '\'' +
-                ", description='" + getDescription() + '\'' +
-                ", id=" + getId() +
-                ", taskStatus=" + getTaskStatus() +
-                '}';
+        return "\nTask{" + "name='" + getName() + '\'' + ", description='" + getDescription() + '\'' + ", id=" + getId() + ", taskStatus=" + getTaskStatus() + '}';
     }
 }
