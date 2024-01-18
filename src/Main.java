@@ -1,23 +1,49 @@
 import Manager.*;
-import Tasks.Epic;
-import Tasks.Status;
-import Tasks.Subtask;
-import Tasks.Task;
+import Tasks.*;
+
 
 /**
- * Все проверки, которые были указаны в ТЗ прошли проверку без ошибок.
+ * Все условия проверки, которые были указаны в ТЗ прошли без ошибок.
  */
 public class Main {
     public static void main(String[] args) {
         TaskManager inMemoryTaskManager = Managers.getDefault();
-//        HistoryManager inMemoryHistoryManager = Managers.getDefaultHistory();
-
-
         Task task;
         Epic epic;
         Subtask subtask;
 
-        task = new Task("First task", "To do smth", Status.NEW);
+        epic = new Epic("First epic", "Epic with 3 subtasks");
+        inMemoryTaskManager.createEpic(epic);
+
+        subtask = new Subtask("First subtask", "Subtask1 for first epic", Status.NEW, 0);
+        inMemoryTaskManager.createSubtask(subtask);
+        subtask = new Subtask("Second subtask", "Subtask2 for first epic", Status.IN_PROGRESS, 0);
+        inMemoryTaskManager.createSubtask(subtask);
+        subtask = new Subtask("Third subtask", "Subtask3 for first epic", Status.NEW, 0);
+        inMemoryTaskManager.createSubtask(subtask);
+
+        epic = new Epic("Second epic", "Epic without subtasks");
+        inMemoryTaskManager.createEpic(epic);
+
+        inMemoryTaskManager.getEpicById(0);
+        inMemoryTaskManager.getSubtaskById(2);
+        inMemoryTaskManager.getSubtaskById(1);
+        inMemoryTaskManager.getSubtaskById(3);
+        inMemoryTaskManager.getEpicById(4);
+        inMemoryTaskManager.getSubtaskById(2);
+        inMemoryTaskManager.getEpicById(0);
+        System.out.println(inMemoryTaskManager.getHistory());
+        System.out.println();
+        // Проверка на корректность истории прошла успешно
+
+        inMemoryTaskManager.deleteEpicById(4);
+        inMemoryTaskManager.deleteSubtaskById(3);
+        System.out.println(inMemoryTaskManager.getHistory());
+        //Проверка на удаление Epic и зависимых от него SubTask прошла успешно
+        //Проверка на удаление одного SubTask из нескольких прошла успешно
+
+
+        /*task = new Task("First task", "To do smth", Status.NEW);
         inMemoryTaskManager.createTask(task);
         task = new Task("Second task", "Smth is Done", Status.NEW);
         inMemoryTaskManager.createTask(task);
@@ -112,7 +138,8 @@ public class Main {
         System.out.println();
         System.out.println();
 
-        System.out.println(inMemoryTaskManager.getHistory());
+        System.out.println(inMemoryTaskManager.getHistory());*/
+
 
     }
 }
