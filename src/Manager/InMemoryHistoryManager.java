@@ -10,11 +10,11 @@ import java.util.*;
  * Класс реализует интерфейс HistoryManager.
  * Весь класс является CustomLinkedList и хранит историю просмотров "внутри себя"
  */
-public class InMemoryHistoryManager<T> implements HistoryManager {
-    private Map<Integer, Node<T>> mapNode = new HashMap<>();
+public class InMemoryHistoryManager implements HistoryManager {
+    private final Map<Integer, Node<Task>> mapNode = new HashMap<>();
     private int size = 0;
-    private Node<T> head;
-    private Node<T> tail;
+    private Node<Task> head;
+    private Node<Task> tail;
 
 
     public InMemoryHistoryManager() {
@@ -29,7 +29,7 @@ public class InMemoryHistoryManager<T> implements HistoryManager {
         if (mapNode.containsKey(task.getId())) {
             removeNode(mapNode.get(task.getId()));
         }
-        mapNode.put(task.getId(), linkLast((T) task));
+        mapNode.put(task.getId(), linkLast(task));
     }
 
     /**
@@ -54,19 +54,19 @@ public class InMemoryHistoryManager<T> implements HistoryManager {
      * Создает новый элемент истории в конце CustomLinkedList и записывает
      * актуальную информацию о расположении отредактированных звеньев в HashMap
      */
-    public Node<T> linkLast(T element) {
-        final Node<T> newNode = new Node<>(null, element, null);
+    public Node<Task> linkLast(Task task) {
+        final Node<Task> newNode = new Node<>(null, task, null);
 
         if (size == 0) {
             head = newNode;
             tail = newNode;
         } else {
-            final Node<T> oldTail = tail;
+            final Node<Task> oldTail = tail;
             newNode.prev = oldTail;
             oldTail.next = newNode;
             tail = newNode;
 
-            Task oldTailTask = (Task) oldTail.item;
+            Task oldTailTask = oldTail.item;
             mapNode.put(oldTailTask.getId(), oldTail);
         }
         size++;
@@ -79,13 +79,13 @@ public class InMemoryHistoryManager<T> implements HistoryManager {
      */
     public List<Task> getTasks() {
         List<Task> historyList = new ArrayList<>();
-        Node<T> current = head;
+        Node<Task> current = head;
 
         while (current != tail) {
-            historyList.add((Task) current.item);
+            historyList.add(current.item);
             current = current.next;
         }
-        historyList.add((Task) current.item);
+        historyList.add(current.item);
         return historyList;
     }
 
@@ -93,9 +93,9 @@ public class InMemoryHistoryManager<T> implements HistoryManager {
      * Удаляет звено из CustomLinkedList редактиуя ссылки соседних звеньев друг на друга,
      * после чего обновляет информацию об этих звеньях в HashMap
      */
-    public void removeNode(Node<T> node) {
-        Node<T> nodeToCorrectPrev = node.prev;
-        Node<T> nodeToCorrectNext = node.next;
+    public void removeNode(Node<Task> node) {
+        Node<Task> nodeToCorrectPrev = node.prev;
+        Node<Task> nodeToCorrectNext = node.next;
 
         size--;
         if (node == head) {
@@ -105,7 +105,7 @@ public class InMemoryHistoryManager<T> implements HistoryManager {
                 nodeToCorrectNext.prev = null;
                 head = nodeToCorrectNext;
 
-                Task nextTask = (Task) nodeToCorrectNext.item;
+                Task nextTask = nodeToCorrectNext.item;
                 int nextId = nextTask.getId();
 
                 mapNode.put(nextId, head);
@@ -116,7 +116,7 @@ public class InMemoryHistoryManager<T> implements HistoryManager {
             nodeToCorrectPrev.next = null;
             tail = nodeToCorrectPrev;
 
-            Task prevTask = (Task) nodeToCorrectPrev.item;
+            Task prevTask = nodeToCorrectPrev.item;
             int prevId = prevTask.getId();
 
             mapNode.put(prevId, tail);
@@ -127,9 +127,9 @@ public class InMemoryHistoryManager<T> implements HistoryManager {
             nodeToCorrectPrev.next = nodeToCorrectNext;
             nodeToCorrectNext.prev = nodeToCorrectPrev;
 
-            Task prevTask = (Task) nodeToCorrectPrev.item;
+            Task prevTask = nodeToCorrectPrev.item;
             int prevId = prevTask.getId();
-            Task nextTask = (Task) nodeToCorrectNext.item;
+            Task nextTask = nodeToCorrectNext.item;
             int nextId = nextTask.getId();
 
             mapNode.put(prevId, nodeToCorrectPrev);
