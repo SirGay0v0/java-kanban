@@ -18,7 +18,6 @@ public class InMemoryHistoryManager implements HistoryManager {
 
 
     public InMemoryHistoryManager() {
-
     }
 
     /**
@@ -85,8 +84,10 @@ public class InMemoryHistoryManager implements HistoryManager {
             historyList.add(current.item);
             current = current.next;
         }
-        historyList.add(current.item);
-        return historyList;
+        if(head!=null) {
+            historyList.add(current.item);
+            return historyList;
+        }else return null;
     }
 
     /**

@@ -1,44 +1,47 @@
 import Manager.*;
 import Tasks.*;
 
+import java.io.File;
+
 
 /**
  * Все условия проверки, которые были указаны в ТЗ прошли без ошибок.
  */
 public class Main {
     public static void main(String[] args) {
-        TaskManager inMemoryTaskManager = Managers.getDefault();
+        File file = new File("save.csv");
+        TaskManager fileBuckedTaskManager = Managers.getDefaultFileBucked(file);
         Task task;
         Epic epic;
         Subtask subtask;
 
         epic = new Epic("First epic", "Epic with 3 subtasks");
-        inMemoryTaskManager.createEpic(epic);
+        fileBuckedTaskManager.createEpic(epic);
 
         subtask = new Subtask("First subtask", "Subtask1 for first epic", Status.NEW, 0);
-        inMemoryTaskManager.createSubtask(subtask);
+        fileBuckedTaskManager.createSubtask(subtask);
         subtask = new Subtask("Second subtask", "Subtask2 for first epic", Status.IN_PROGRESS, 0);
-        inMemoryTaskManager.createSubtask(subtask);
+        fileBuckedTaskManager.createSubtask(subtask);
         subtask = new Subtask("Third subtask", "Subtask3 for first epic", Status.NEW, 0);
-        inMemoryTaskManager.createSubtask(subtask);
+        fileBuckedTaskManager.createSubtask(subtask);
 
         epic = new Epic("Second epic", "Epic without subtasks");
-        inMemoryTaskManager.createEpic(epic);
+        fileBuckedTaskManager.createEpic(epic);
 
-        inMemoryTaskManager.getEpicById(0);
-        inMemoryTaskManager.getSubtaskById(2);
-        inMemoryTaskManager.getSubtaskById(1);
-        inMemoryTaskManager.getSubtaskById(3);
-        inMemoryTaskManager.getEpicById(4);
-        inMemoryTaskManager.getSubtaskById(2);
-        inMemoryTaskManager.getEpicById(0);
-        System.out.println(inMemoryTaskManager.getHistory());
+        fileBuckedTaskManager.getEpicById(0);
+        fileBuckedTaskManager.getSubtaskById(2);
+        fileBuckedTaskManager.getSubtaskById(1);
+        fileBuckedTaskManager.getSubtaskById(3);
+        fileBuckedTaskManager.getEpicById(4);
+        fileBuckedTaskManager.getSubtaskById(2);
+        fileBuckedTaskManager.getEpicById(0);
+        System.out.println(fileBuckedTaskManager.getHistory());
         System.out.println();
         // Проверка на корректность истории прошла успешно
 
-        inMemoryTaskManager.deleteEpicById(4);
-        inMemoryTaskManager.deleteSubtaskById(3);
-        System.out.println(inMemoryTaskManager.getHistory());
+        fileBuckedTaskManager.deleteEpicById(4);
+        fileBuckedTaskManager.deleteSubtaskById(3);
+        System.out.println(fileBuckedTaskManager.getHistory());
         //Проверка на удаление Epic и зависимых от него SubTask прошла успешно
         //Проверка на удаление одного SubTask из нескольких прошла успешно
 

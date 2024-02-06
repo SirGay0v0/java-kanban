@@ -15,32 +15,6 @@ import java.util.Map;
  */
 public class FileBackedTaskManager extends InMemoryTaskManager {
 
-
-    public static void main(String[] args) {
-        File file = new File("save.csv");
-        TaskManager fileBuckedTaskManager = Managers.getDefaultFileBucked(file);
-        Task task;
-        Epic epic;
-        Subtask subtask;
-
-
-        epic = new Epic("First epic", "Epic with 2 subtasks");
-        fileBuckedTaskManager.createEpic(epic);
-        task = new Task("First task", "To do smth", Status.NEW);
-        fileBuckedTaskManager.createTask(task);
-        subtask = new Subtask("First subtask", "Subtask1 for first epic", Status.NEW, 0);
-        fileBuckedTaskManager.createSubtask(subtask);
-        subtask = new Subtask("Second subtask", "Subtask2 for first epic", Status.IN_PROGRESS, 0);
-        fileBuckedTaskManager.createSubtask(subtask);
-
-        fileBuckedTaskManager.getSubtaskById(3);
-        fileBuckedTaskManager.getTaskById(1);
-        fileBuckedTaskManager.getSubtaskById(2);
-        fileBuckedTaskManager.getEpicById(0);
-        
-    }
-
-
     private final File file;
 
     /**
@@ -79,7 +53,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
         } catch (IOException ex) {
             new ManagerSaveException();
-        } catch (NullPointerException ignored) {
         }
     }
 
@@ -108,14 +81,18 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
      */
 
     public String historyToString(HistoryManager historyManager) {
+
         Collection<Task> collection = historyManager.getHistory();
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Task task : collection) {
-            stringBuilder.append(task.getId() + ",");
-        }
-        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
-        return String.valueOf(stringBuilder);
+        if (collection != null) {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (Task task : collection) {
+                stringBuilder.append(task.getId() + ",");
+            }
+            stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+            return String.valueOf(stringBuilder);
+        } else return "";
     }
+
 
     /**
      * Основной метод, который подгружает историю из файла.
@@ -170,7 +147,8 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             if (maxId > id) {
                 id = maxId + 1;
             }
-        } catch (IOException ignored) {
+        } catch (IOException ex) {
+            throw new ManagerSaveException();
         }
     }
 
