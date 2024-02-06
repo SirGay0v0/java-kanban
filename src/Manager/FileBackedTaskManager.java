@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+
 /**
  * Класс реализующий интерфейс TaskManager.
  * Отличается тем, что хранит историю просмотра в файле указанном при создании класса.
@@ -36,10 +37,13 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         fileBuckedTaskManager.getTaskById(1);
         fileBuckedTaskManager.getSubtaskById(2);
         fileBuckedTaskManager.getEpicById(0);
+
+        fileBuckedTaskManager.deleteEpicById(0);
     }
 
 
     private final File file;
+
     /**
      * При инициализации запускает метод loadFromFile, который подгружает из файла актуальное
      * состояние InMemoryHistoryManager, а также заполняет пустые hashMap.
@@ -79,6 +83,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         } catch (NullPointerException ignored) {
         }
     }
+
     /**
      * Следуюшие три метода возвращают строковое представление каждого из объектов Task/Epic/Subtask
      * которое в последующем будет записано в файл с сохраниением.
@@ -163,7 +168,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                     }
                 }
             }
-            id = maxId+1;
+            if (maxId > id) {
+                id = maxId + 1;
+            }
         } catch (IOException ignored) {
         }
     }
