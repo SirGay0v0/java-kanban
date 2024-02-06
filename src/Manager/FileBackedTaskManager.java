@@ -37,8 +37,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         fileBuckedTaskManager.getTaskById(1);
         fileBuckedTaskManager.getSubtaskById(2);
         fileBuckedTaskManager.getEpicById(0);
-
-        fileBuckedTaskManager.deleteEpicById(0);
+        
     }
 
 
