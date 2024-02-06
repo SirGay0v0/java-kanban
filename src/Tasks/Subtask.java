@@ -5,8 +5,8 @@ package Tasks;
  * Id Epic к которому относится Subtask, задается в конструкторе при его создании.
  */
 public class Subtask extends Task {
-    private int epicOwnerId;
-    private Status subtaskStatus;
+    private final int epicOwnerId;
+    private final Status subtaskStatus;
 
     public Subtask(String name, String description, Status subtaskStatus, int epicOwnerId) {
         super(name, description);
