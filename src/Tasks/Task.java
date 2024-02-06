@@ -7,8 +7,8 @@ import java.util.Objects;
  * Содержит все общие поля и 2 конструктора: Для себя и общий для наследников.
  */
 public class Task {
-    private String name;
-    private String description;
+    private final String name;
+    private final String description;
     private int id;
     private Status taskStatus;
 
