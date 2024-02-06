@@ -20,16 +20,16 @@ import java.util.*;
  * остальные HashMap.
  */
 public class InMemoryTaskManager implements TaskManager {
-    private List<HashMap> listOfTasks;
-    private Map<Integer, Task> taskHashMap;
-    private Map<Integer, Epic> epicHashMap;
-    private Map<Integer, Subtask> subtaskHashMap;
-    private final HistoryManager inMemoryHistoryManager;
-    private TaskGetter taskGetter = new TaskGetter();
-    private TaskCreator taskCreator = new TaskCreator();
-    private TaskDeleter taskDeleter = new TaskDeleter();
-    private TaskUpdater taskUpdater = new TaskUpdater();
-    private int id = 0;
+    protected List<HashMap> listOfTasks;
+    protected Map<Integer, Task> taskHashMap;
+    protected Map<Integer, Epic> epicHashMap;
+    protected Map<Integer, Subtask> subtaskHashMap;
+    protected final HistoryManager inMemoryHistoryManager;
+    private final TaskGetter taskGetter = new TaskGetter();
+    private final TaskCreator taskCreator = new TaskCreator();
+    private final TaskDeleter taskDeleter = new TaskDeleter();
+    private final TaskUpdater taskUpdater = new TaskUpdater();
+    protected int id = 0;
 
 
     public InMemoryTaskManager(HistoryManager inMemoryHistoryManager) {
@@ -37,9 +37,9 @@ public class InMemoryTaskManager implements TaskManager {
         epicHashMap = new HashMap<>();
         subtaskHashMap = new HashMap<>();
         listOfTasks = new ArrayList<>();
-        listOfTasks.add(0, (HashMap) taskHashMap);
-        listOfTasks.add(1, (HashMap) epicHashMap);
-        listOfTasks.add(2, (HashMap) subtaskHashMap);
+        listOfTasks.add(0, (HashMap<Integer, Task>) taskHashMap);
+        listOfTasks.add(1, (HashMap<Integer, Epic>) epicHashMap);
+        listOfTasks.add(2, (HashMap<Integer, Subtask>) subtaskHashMap);
         this.inMemoryHistoryManager = inMemoryHistoryManager;
     }
 
