@@ -1,5 +1,7 @@
 package Manager;
 
+import Exceptions.ManagerLoadException;
+import Exceptions.ManagerSaveException;
 import Tasks.*;
 
 import java.io.*;
@@ -148,7 +150,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 id = maxId + 1;
             }
         } catch (IOException ex) {
-            throw new ManagerSaveException();
+            throw new ManagerLoadException();
         }
     }
 
