@@ -21,6 +21,7 @@ public class Task {
     public Task(String name, String description) {
         this.name = name;
         this.description = description;
+        taskStatus = Status.NEW;
     }
 
     public Status getTaskStatus() {

@@ -4,7 +4,9 @@ package ManagerBusinessLogic;
 import Manager.HistoryManager;
 import Tasks.Epic;
 import Tasks.Subtask;
+import Tasks.Task;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -12,7 +14,12 @@ import java.util.Map;
  * методы для удаления по запрашиваемому id каждого класса.
  */
 public class TaskDeleter {
-    public void deleteAll(Map hashMap) {
+    public void deleteAll(Map<Integer, ? extends Task> hashMap, HistoryManager historyManager) {
+        for (Map.Entry<Integer, ?> entry : hashMap.entrySet()) {
+            if (historyManager.getHistory()!=null && historyManager.getHistory().contains(entry.getValue())) {
+                historyManager.remove(entry.getKey());
+            }
+        }
         hashMap.clear();
     }
 

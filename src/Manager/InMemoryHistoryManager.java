@@ -84,10 +84,10 @@ public class InMemoryHistoryManager implements HistoryManager {
             historyList.add(current.item);
             current = current.next;
         }
-        if(head!=null) {
-            historyList.add(current.item);
+        if (head != null && current.item!=null) {
+                historyList.add(current.item);
             return historyList;
-        }else return null;
+        } else return null;
     }
 
     /**

@@ -15,14 +15,18 @@ import java.util.HashMap;
 public class TaskUpdater {
 
     public void updateById(Task task, int idTask, ArrayList<HashMap> listOfTasks, int option) {
-        task.setId(idTask);
-        listOfTasks.get(option).put(idTask, task);
 
-        if (option == 2) {
-            EpicStatusVerification epicStatusVerification = new EpicStatusVerification();
-            Epic epic = (Epic) listOfTasks.get(1).get(((Subtask) task).getEpicOwnerId());
+        if (listOfTasks.get(option).containsKey(idTask)) {
 
-            epicStatusVerification.verifyStatus(epic, listOfTasks.get(2));
+            task.setId(idTask);
+            listOfTasks.get(option).put(idTask, task);
+
+            if (option == 2) {
+                EpicStatusVerification epicStatusVerification = new EpicStatusVerification();
+                Epic epic = (Epic) listOfTasks.get(1).get(((Subtask) task).getEpicOwnerId());
+
+                epicStatusVerification.verifyStatus(epic, listOfTasks.get(2));
+            }
         }
     }
 }

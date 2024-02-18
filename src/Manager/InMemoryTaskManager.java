@@ -79,17 +79,17 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteTasks() {
-        taskDeleter.deleteAll(taskHashMap);
+        taskDeleter.deleteAll(taskHashMap,inMemoryHistoryManager);
     }
 
     @Override
     public void deleteEpics() {
-        taskDeleter.deleteAll(epicHashMap);
+        taskDeleter.deleteAll(epicHashMap,inMemoryHistoryManager);
     }
 
     @Override
     public void deleteSubtasks() {
-        taskDeleter.deleteAll(subtaskHashMap);
+        taskDeleter.deleteAll(subtaskHashMap,inMemoryHistoryManager);
     }
 
     @Override
