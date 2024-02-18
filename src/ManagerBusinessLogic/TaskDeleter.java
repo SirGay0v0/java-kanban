@@ -24,7 +24,9 @@ public class TaskDeleter {
     }
 
     public void deleteTaskById(Map taskHashMap, int id) {
-        taskHashMap.remove(id);
+        if(taskHashMap.containsKey(id)) {
+            taskHashMap.remove(id);
+        }
     }
 
     /**
@@ -32,13 +34,15 @@ public class TaskDeleter {
      * SubTask принадлежащих этому Epic
      */
     public void deleteEpicById(Map epicHashMap, int epicId, Map subtaskHashMap, HistoryManager inMemoryHistoryManager) {
-        Epic epic = (Epic) epicHashMap.get(epicId);
+        if(epicHashMap.containsKey(epicId)) {
+            Epic epic = (Epic) epicHashMap.get(epicId);
 
-        for (Integer subtaskId : epic.getIdSubTasks()) {
-            inMemoryHistoryManager.remove(subtaskId);
-            subtaskHashMap.remove(subtaskId);
+            for (Integer subtaskId : epic.getIdSubTasks()) {
+                inMemoryHistoryManager.remove(subtaskId);
+                subtaskHashMap.remove(subtaskId);
+            }
+            epicHashMap.remove(epicId);
         }
-        epicHashMap.remove(epicId);
     }
 
     public void deleteSubtaskById(Map epicHashMap, Integer subtaskId, Map subtaskHashMap) {

@@ -1,6 +1,18 @@
 package Tests;
 
+import Manager.FileBackedTaskManager;
+import Manager.Managers;
+import Manager.TaskManager;
+import Tasks.Epic;
+import Tasks.Task;
 import org.junit.jupiter.api.Test;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Collections;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class FileBuckedTaskManagerTest extends TaskManagerTest {
 
@@ -78,6 +90,7 @@ public class FileBuckedTaskManagerTest extends TaskManagerTest {
     public void getTaskByIdWhenIdIncorect() {
         getTaskByIdWhenIdIncorect("bucked");
     }
+
     @Test
     public void getEpicById() {
         getEpicById("bucked");
@@ -206,5 +219,43 @@ public class FileBuckedTaskManagerTest extends TaskManagerTest {
     @Test
     public void getHistoryWhenHistoryEmpty() {
         getHistoryWhenHistoryEmpty("bucked");
+    }
+
+    @Test
+    public void shouldSaveAndLoadEmptyTasks() throws IOException {
+        File file = new File("save.csv");
+        file.delete();
+        file.createNewFile();
+        TaskManager buckedManager = Managers.getDefaultFileBucked(file);
+        assertNull(buckedManager.getHistory());
+        buckedManager = Managers.getDefaultFileBucked(file);
+        assertNull(buckedManager.getHistory());
+    }
+
+    @Test
+    public void shouldSaveAndLoadWithoutSubtasks() throws IOException {
+        File file = new File("save.csv");
+        file.delete();
+        file.createNewFile();
+        Epic epic = new Epic("l", "l");
+        TaskManager buckedManager = Managers.getDefaultFileBucked(file);
+        buckedManager.createEpic(epic);
+        buckedManager.getEpicById(0);
+        assertEquals(Collections.singletonList(epic), buckedManager.getHistory());
+        buckedManager = Managers.getDefaultFileBucked(file);
+        assertEquals(Collections.singletonList(epic), buckedManager.getHistory());
+    }
+
+    @Test
+    public void shouldSaveAndLoadEmptyHistory() throws IOException {
+        File file = new File("save.csv");
+        file.delete();
+        file.createNewFile();
+        Epic epic = new Epic("l", "l");
+        TaskManager buckedManager = Managers.getDefaultFileBucked(file);
+        buckedManager.createEpic(epic);
+        assertNull(buckedManager.getHistory());
+        buckedManager = Managers.getDefaultFileBucked(file);
+        assertNull(buckedManager.getHistory());
     }
 }

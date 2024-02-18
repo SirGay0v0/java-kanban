@@ -37,8 +37,10 @@ public class InMemoryHistoryManager implements HistoryManager {
      */
     @Override
     public void remove(int id) {
-        removeNode(mapNode.get(id));
-        mapNode.remove(id);
+        if (mapNode.containsKey(id)) {
+            removeNode(mapNode.get(id));
+            mapNode.remove(id);
+        }
     }
 
     /**
@@ -84,8 +86,8 @@ public class InMemoryHistoryManager implements HistoryManager {
             historyList.add(current.item);
             current = current.next;
         }
-        if (head != null && current.item!=null) {
-                historyList.add(current.item);
+        if (head != null && current.item != null) {
+            historyList.add(current.item);
             return historyList;
         } else return null;
     }

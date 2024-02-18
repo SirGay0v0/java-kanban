@@ -10,10 +10,7 @@ import Tasks.Task;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -334,55 +331,48 @@ public abstract class TaskManagerTest<T extends TaskManager> {
     }
 
     public void deleteTaskById(String mode) {
-        assertThrows(NullPointerException.class, () -> {
-            generateRightManager(mode);
-            Task testTask = new Task("f", "f");
-            taskManager.createTask(testTask);
-            taskManager.deleteTaskById(0);
-        });
+        generateRightManager(mode);
+        Task testTask = new Task("f", "f");
+        taskManager.createTask(testTask);
+        taskManager.deleteTaskById(0);
+        assertEquals(Collections.EMPTY_LIST, taskManager.getTasks());
     }
 
     public void deleteTaskByIdWhenCollectionEmpty(String mode) {
-        assertThrows(NullPointerException.class, () -> {
             generateRightManager(mode);
             taskManager.deleteTaskById(0);
-        });
+        assertEquals(Collections.EMPTY_LIST, taskManager.getTasks());
     }
 
     public void deleteEpicById(String mode) {
-        assertThrows(NullPointerException.class, () -> {
             generateRightManager(mode);
             Epic testTask = new Epic("f", "f");
             taskManager.createEpic(testTask);
             taskManager.deleteEpicById(0);
-        });
-
-
+        assertEquals(Collections.EMPTY_LIST, taskManager.getEpics());
     }
 
     public void deleteEpicByIdWhenCollectionEmpty(String mode) {
-        assertThrows(NullPointerException.class, () -> {
             generateRightManager(mode);
             taskManager.deleteEpicById(0);
-        });
+        assertEquals(Collections.EMPTY_LIST, taskManager.getEpics());
     }
 
     public void deleteSubtaskById(String mode) {
-        assertThrows(NullPointerException.class, () -> {
+
             generateRightManager(mode);
             Epic testEpic = new Epic("f", "f");
             Subtask testTask = new Subtask("f", "f", Status.NEW, 0);
             taskManager.createEpic(testEpic);
             taskManager.createSubtask(testTask);
             taskManager.deleteSubtaskById(1);
-        });
+        assertEquals(Collections.EMPTY_LIST, taskManager.getSubtasks());
     }
 
     public void deleteSubtaskByIdWhenCollectionEmpty(String mode) {
-        assertThrows(NullPointerException.class, () -> {
             generateRightManager(mode);
             taskManager.deleteTaskById(0);
-        });
+        assertEquals(Collections.EMPTY_LIST, taskManager.getSubtasks());
     }
 
     public void getAllSubtasksFromEpic(String mode) {

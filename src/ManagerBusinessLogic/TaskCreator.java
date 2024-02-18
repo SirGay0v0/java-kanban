@@ -15,8 +15,10 @@ import java.util.Map;
  */
 public class TaskCreator {
     public void createTask(Map taskHashMap, Task task, int id) {
-        task.setId(id);
-        taskHashMap.put(id, task);
+        if (!taskHashMap.containsValue(task)) {
+            task.setId(id);
+            taskHashMap.put(id, task);
+        }
     }
 
     public void createSubtask(ArrayList<HashMap> listOfTasks, Subtask subtask, int id) {
