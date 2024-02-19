@@ -17,15 +17,16 @@ public class Task {
     private Duration duration;
     private LocalDateTime startTime;
 
-//    public Task(String name, String description, Status taskStatus) {
-//        this.name = name;
-//        this.description = description;
-//        this.taskStatus = taskStatus;
-//    }
-
-    protected Task(String name, String description) {
+    public Task(String name, String description, Status taskStatus) {
         this.name = name;
         this.description = description;
+        this.taskStatus = taskStatus;
+    }
+
+    public Task(String name, String description) {
+        this.name = name;
+        this.description = description;
+        taskStatus = Status.NEW;
     }
 
     public Task(String name, String description, Status taskStatus,
@@ -43,7 +44,7 @@ public class Task {
 
     public void setStartTime(String startTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        this.startTime = LocalDateTime.parse(startTime,formatter);
+        this.startTime = LocalDateTime.parse(startTime, formatter);
     }
 
     public Duration getDuration() {
@@ -91,10 +92,20 @@ public class Task {
         return Objects.hash(id);
     }
 
-
     @Override
     public String toString() {
-        return "\nTask{" +
+
+        if (startTime == null) {
+            return "\nTask{" +
+                    "name='" + name + '\'' +
+                    ", description='" + description + '\'' +
+                    ", id=" + id +
+                    ", taskStatus=" + taskStatus +
+                    ", startTime=" + "n/a" +
+                    ", duration=" + "n/a" +
+                    ", endTime=" + "n/a" +
+                    '}';
+        } else return "\nTask{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", id=" + id +
@@ -102,7 +113,6 @@ public class Task {
                 ", startTime=" + startTime +
                 ", duration=" + duration +
                 ", endTime=" + getEndTime() +
-
                 '}';
     }
 }

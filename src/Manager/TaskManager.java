@@ -55,5 +55,7 @@ public interface TaskManager {
 
     Collection<Task> getHistory();
 
+    Collection<? extends Task> getPrioritizedTasks();
+
 }
 

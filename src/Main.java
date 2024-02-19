@@ -16,17 +16,21 @@ public class Main {
         Epic epic;
         Subtask subtask;
 
-        task = new Task("name", "description", Status.NEW, "2014-04-08 12:30", "120");
+        task = new Task("name", "description", Status.NEW);
         taskManager.createTask(task);
-        epic = new Epic("name3", "description");
-        taskManager.createEpic(epic);
-        subtask = new Subtask("name3", "description2", Status.NEW, 3, "2014-04-08 12:30", "180");
-        taskManager.createSubtask(subtask);
-        subtask = new Subtask("name3", "description3", Status.NEW, 3, "2014-04-08 18:00", "60");
-        taskManager.createSubtask(subtask);
-        System.out.println(taskManager.getSubtaskById(1));
-        System.out.println(taskManager.getSubtaskById(2));
-        System.out.println(taskManager.getEpicById(0));
+        task = new Task("1", "1");
+        taskManager.createTask(task);
+        task =new Task("3","3",Status.IN_PROGRESS,"2024-03-20 14:00","40");
+        taskManager.createTask(task);
+//        epic = new Epic("name3", "description");
+//        taskManager.createEpic(epic);
+//        subtask = new Subtask("name3", "description2", Status.NEW, 3, "2014-04-08 12:30", "180");
+//        taskManager.createSubtask(subtask);
+//        subtask = new Subtask("name3", "description3", Status.NEW, 3, "2014-04-08 18:00", "60");
+//        taskManager.createSubtask(subtask);
+        System.out.println(taskManager.getTasks());
+//        System.out.println(taskManager.getEpics());
+//        System.out.println(taskManager.getSubtasks());
 
         //System.out.println(taskManager.getTaskById(0));
 

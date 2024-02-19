@@ -5,6 +5,7 @@ import Tasks.Epic;
 import Tasks.Subtask;
 import Tasks.Task;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -79,17 +80,17 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteTasks() {
-        taskDeleter.deleteAll(taskHashMap,inMemoryHistoryManager);
+        taskDeleter.deleteAll(taskHashMap, inMemoryHistoryManager);
     }
 
     @Override
     public void deleteEpics() {
-        taskDeleter.deleteAll(epicHashMap,inMemoryHistoryManager);
+        taskDeleter.deleteAll(epicHashMap, inMemoryHistoryManager);
     }
 
     @Override
     public void deleteSubtasks() {
-        taskDeleter.deleteAll(subtaskHashMap,inMemoryHistoryManager);
+        taskDeleter.deleteAll(subtaskHashMap, inMemoryHistoryManager);
     }
 
     @Override
@@ -161,5 +162,12 @@ public class InMemoryTaskManager implements TaskManager {
         return inMemoryHistoryManager.getHistory();
     }
 
+    @Override
+    public Collection<? extends Task> getPrioritizedTasks() {
+        TreeSet<? extends Task> priorityTree = new TreeSet<>();
 
+
+
+        return priorityTree;
+    }
 }
