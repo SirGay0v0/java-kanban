@@ -23,6 +23,7 @@ public class TaskCreator {
 
     public void createSubtask(ArrayList<HashMap> listOfTasks, Subtask subtask, int id) {
         EpicStatusVerification epicStatusVerification = new EpicStatusVerification();
+        EpicTimeVerification epicTimeVerification = new EpicTimeVerification();
         HashMap subtaskHashMap = listOfTasks.get(2);
         HashMap epicHashMap = listOfTasks.get(1);
         Epic epic = (Epic) epicHashMap.get(subtask.getEpicOwnerId());
@@ -34,6 +35,7 @@ public class TaskCreator {
         epicHashMap.put(epic.getId(), epic);
 
         epicStatusVerification.verifyStatus(epic, subtaskHashMap);
+        epicTimeVerification.verifyTime(epic, subtaskHashMap);
 
     }
 }

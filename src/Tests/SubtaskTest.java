@@ -12,7 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class SubtaskTest {
     TaskManager inMemoryManager = Managers.getDefault();
     Epic epic = new Epic("test epic", "some description");
-    Subtask subtask = new Subtask("t","t", Status.IN_PROGRESS,0);
+    Subtask subtask = new Subtask("t","t", Status.IN_PROGRESS,0,
+            "2014-04-08 12:30","120");
 
     @Test
     void shouldReturEpicOwnerId(){

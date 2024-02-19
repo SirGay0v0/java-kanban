@@ -1,5 +1,7 @@
 package Tasks;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -11,11 +13,14 @@ import java.util.Collection;
 public class Epic extends Task {
     private Status epicStatus;
     private Collection<Integer> idSubTasks;
+    private LocalDateTime startTime;
+    private Duration duration;
+    private LocalDateTime endTime;
 
     public Epic(String name, String description) {
         super(name, description);
         idSubTasks = new ArrayList<>();
-        setEpicStatus(Status.NEW);
+        epicStatus = null;
     }
 
     public Status getEpicStatus() {
@@ -30,8 +35,31 @@ public class Epic extends Task {
         return idSubTasks;
     }
 
-    public void setIdSubTasks(Collection<Integer> idSubTasks) {
-        this.idSubTasks = idSubTasks;
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
+    @Override
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    @Override
+    public Duration getDuration() {
+        return duration;
+    }
+
+    @Override
+    public LocalDateTime getEndTime() {
+        return endTime;
     }
 
     @Override
@@ -42,6 +70,19 @@ public class Epic extends Task {
                 ", id=" + getId() +
                 ", epicStatus=" + getEpicStatus() +
                 ", subtasksList=" + getIdSubTasks() +
+                ", startTime=" + this.startTime +
+                ", duration=" + this.duration +
+                ", endTime=" + this.endTime +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }

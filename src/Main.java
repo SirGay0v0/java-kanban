@@ -10,38 +10,53 @@ import java.io.File;
 public class Main {
     public static void main(String[] args) {
         File file = new File("save.csv");
-        TaskManager fileBuckedTaskManager = Managers.getDefaultFileBucked(file);
+        TaskManager taskManager = Managers.getDefaultFileBucked(file);
+
         Task task;
         Epic epic;
         Subtask subtask;
 
-        epic = new Epic("First epic", "Epic with 3 subtasks");
-        fileBuckedTaskManager.createEpic(epic);
+        task = new Task("name", "description", Status.NEW, "2014-04-08 12:30", "120");
+        taskManager.createTask(task);
+        epic = new Epic("name3", "description");
+        taskManager.createEpic(epic);
+        subtask = new Subtask("name3", "description2", Status.NEW, 3, "2014-04-08 12:30", "180");
+        taskManager.createSubtask(subtask);
+        subtask = new Subtask("name3", "description3", Status.NEW, 3, "2014-04-08 18:00", "60");
+        taskManager.createSubtask(subtask);
+        System.out.println(taskManager.getSubtaskById(1));
+        System.out.println(taskManager.getSubtaskById(2));
+        System.out.println(taskManager.getEpicById(0));
 
-        subtask = new Subtask("First subtask", "Subtask1 for first epic", Status.NEW, 0);
-        fileBuckedTaskManager.createSubtask(subtask);
-        subtask = new Subtask("Second subtask", "Subtask2 for first epic", Status.IN_PROGRESS, 0);
-        fileBuckedTaskManager.createSubtask(subtask);
-        subtask = new Subtask("Third subtask", "Subtask3 for first epic", Status.NEW, 0);
-        fileBuckedTaskManager.createSubtask(subtask);
+        //System.out.println(taskManager.getTaskById(0));
 
-        epic = new Epic("Second epic", "Epic without subtasks");
-        fileBuckedTaskManager.createEpic(epic);
-
-        fileBuckedTaskManager.getEpicById(0);
-        fileBuckedTaskManager.getSubtaskById(2);
-        fileBuckedTaskManager.getSubtaskById(1);
-        fileBuckedTaskManager.getSubtaskById(3);
-        fileBuckedTaskManager.getEpicById(4);
-        fileBuckedTaskManager.getSubtaskById(2);
-        fileBuckedTaskManager.getEpicById(0);
-        System.out.println(fileBuckedTaskManager.getHistory());
-        System.out.println();
-        // Проверка на корректность истории прошла успешно
-
-        fileBuckedTaskManager.deleteEpicById(4);
-        fileBuckedTaskManager.deleteSubtaskById(3);
-        System.out.println(fileBuckedTaskManager.getHistory());
+//        epic = new Epic("First epic", "Epic with 3 subtasks");
+//        fileBuckedTaskManager.createEpic(epic);
+//
+//        subtask = new Subtask("First subtask", "Subtask1 for first epic", Status.NEW, 0);
+//        fileBuckedTaskManager.createSubtask(subtask);
+//        subtask = new Subtask("Second subtask", "Subtask2 for first epic", Status.IN_PROGRESS, 0);
+//        fileBuckedTaskManager.createSubtask(subtask);
+//        subtask = new Subtask("Third subtask", "Subtask3 for first epic", Status.NEW, 0);
+//        fileBuckedTaskManager.createSubtask(subtask);
+//
+//        epic = new Epic("Second epic", "Epic without subtasks");
+//        fileBuckedTaskManager.createEpic(epic);
+//
+//        fileBuckedTaskManager.getEpicById(0);
+//        fileBuckedTaskManager.getSubtaskById(2);
+//        fileBuckedTaskManager.getSubtaskById(1);
+//        fileBuckedTaskManager.getSubtaskById(3);
+//        fileBuckedTaskManager.getEpicById(4);
+//        fileBuckedTaskManager.getSubtaskById(2);
+//        fileBuckedTaskManager.getEpicById(0);
+//        System.out.println(fileBuckedTaskManager.getHistory());
+//        System.out.println();
+//        // Проверка на корректность истории прошла успешно
+//
+//        fileBuckedTaskManager.deleteEpicById(4);
+//        fileBuckedTaskManager.deleteSubtaskById(3);
+//        System.out.println(fileBuckedTaskManager.getHistory());
         //Проверка на удаление Epic и зависимых от него SubTask прошла успешно
         //Проверка на удаление одного SubTask из нескольких прошла успешно
 

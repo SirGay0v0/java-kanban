@@ -1,10 +1,15 @@
 package Manager;
 
 import Exceptions.ManagerSaveException;
+import ManagerBusinessLogic.EpicStatusVerification;
+import ManagerBusinessLogic.EpicTimeVerification;
 import Tasks.*;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -37,7 +42,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     private void save() {
         try (BufferedWriter bufferedWriter = new BufferedWriter(
                 new FileWriter(file, StandardCharsets.UTF_8))) {
-            bufferedWriter.write("id,type,name,status,description,epic\n");
+            bufferedWriter.write("id,type,name,status,description,epic,startTime,duration,endTime\n");
 
             for (Map.Entry<Integer, Task> entry : taskHashMap.entrySet()) {
                 bufferedWriter.write(taskToString(taskHashMap.get(entry.getKey())));
@@ -63,18 +68,27 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
      */
     public String taskToString(Task task) {
         return task.getId() + ",TASK," + task.getName() + ","
-                + task.getTaskStatus() + "," + task.getDescription() + ",\n";
+                + task.getTaskStatus() + "," + task.getDescription()
+                + "," + task.getStartTime() + "," + task.getDuration()
+                + "," + task.getEndTime() + ",\n";
     }
 
     public String epicToString(Epic epic) {
-        return epic.getId() + ",EPIC," + epic.getName() + ","
-                + epic.getEpicStatus() + "," + epic.getDescription() + ",\n";
+        if (!epic.getIdSubTasks().isEmpty()) {
+            return epic.getId() + ",EPIC," + epic.getName() + ","
+                    + epic.getEpicStatus() + "," + epic.getDescription()
+                    + "," + epic.getStartTime() + "," + epic.getDuration() + ","
+                    + epic.getEndTime() + ",\n";
+        } else return epic.getId() + ",EPIC," + epic.getName() + ","
+                + epic.getEpicStatus() + "," + epic.getDescription()
+                + ",n/a,n/a,n/a,\n";
     }
 
     public String subTaskToString(Subtask subTask) {
         return subTask.getId() + ",SUBTASK," + subTask.getName() + ","
                 + subTask.getSubtaskStatus() + "," + subTask.getDescription() + ","
-                + subTask.getEpicOwnerId() + ",\n";
+                + subTask.getEpicOwnerId() + "," + subTask.getStartTime()
+                + "," + subTask.getDuration() + "," + subTask.getEndTime() + ",\n";
     }
 
     /**
@@ -97,7 +111,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     /**
      * Основной метод, который подгружает историю из файла.
-     * Сначала он пробегается по задачам параллельно клады их в
+     * Сначала он пробегается по задачам параллельно кладя их в
      * соответсвующие HashMap, после считывает строку с историей и
      * вызывает для каждой из задач метод get, чтобы восстановились все звенья истории в InMemoryTaskManager
      */
@@ -129,6 +143,11 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                         }
                         case "SUBTASK": {
                             subtaskHashMap.put(id, (Subtask) task);
+                            EpicStatusVerification epicStatusVerify = new EpicStatusVerification();
+                            EpicTimeVerification epicTimeVerify = new EpicTimeVerification();
+                            epicHashMap.get(((Subtask) task).getEpicOwnerId()).getIdSubTasks().add(task.getId());
+                            epicStatusVerify.verifyStatus(epicHashMap.get(((Subtask) task).getEpicOwnerId()), subtaskHashMap);
+                            epicTimeVerify.verifyTime(epicHashMap.get(((Subtask) task).getEpicOwnerId()), subtaskHashMap);
                             break;
                         }
                     }
@@ -175,10 +194,15 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         String type = taskParts[1];
         String name = taskParts[2];
         String description = taskParts[4];
+        String startTime;
+        String duration;
+
         switch (type) {
             case "TASK": {
+                startTime = taskParts[5].replace("T", " ");
+                duration = String.valueOf(Duration.parse(taskParts[6]).toMinutes());
                 Status status = Status.valueOf(taskParts[3]);
-                return new Task(name, description, status);
+                return new Task(name, description, status, startTime, duration);
             }
             case "EPIC": {
                 return new Epic(name, description);
@@ -186,7 +210,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             case "SUBTASK": {
                 int epicOwnerId = Integer.parseInt(taskParts[5]);
                 Status status = Status.valueOf(taskParts[3]);
-                return new Subtask(name, description, status, epicOwnerId);
+                startTime = taskParts[6].replace("T", " ");
+                duration = String.valueOf(Duration.parse(taskParts[7]).toMinutes());
+                return new Subtask(name, description, status, epicOwnerId, startTime, duration);
             }
         }
         return null;

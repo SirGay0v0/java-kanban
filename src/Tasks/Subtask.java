@@ -1,5 +1,8 @@
 package Tasks;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 /**
  * Наследник класса Task с новыми полями.
  * Id Epic к которому относится Subtask, задается в конструкторе при его создании.
@@ -8,8 +11,9 @@ public class Subtask extends Task {
     private final int epicOwnerId;
     private final Status subtaskStatus;
 
-    public Subtask(String name, String description, Status subtaskStatus, int epicOwnerId) {
-        super(name, description);
+    public Subtask(String name, String description, Status subtaskStatus,
+                   int epicOwnerId, String startTime, String duration) {
+        super(name, description, subtaskStatus, startTime, duration);
         this.epicOwnerId = epicOwnerId;
         this.subtaskStatus = subtaskStatus;
     }
@@ -30,6 +34,10 @@ public class Subtask extends Task {
                 ", id=" + getId() +
                 ", subtaskStatus=" + getSubtaskStatus() +
                 ", epicOwnerId=" + getEpicOwnerId() +
+                ", startTime=" + getStartTime() +
+                ", duration=" + getDuration() +
+                ", endTime=" + getEndTime() +
                 "}";
     }
+
 }
