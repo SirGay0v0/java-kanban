@@ -10,25 +10,56 @@ import java.io.File;
 public class Main {
     public static void main(String[] args) {
         File file = new File("save.csv");
-        TaskManager taskManager = Managers.getDefaultFileBucked(file);
+        TaskManager manager = Managers.getDefault();
 
         Task task;
         Epic epic;
         Subtask subtask;
 
-        task = new Task("name", "description", Status.NEW);
-        taskManager.createTask(task);
-        task = new Task("1", "1");
-        taskManager.createTask(task);
-        task =new Task("3","3",Status.IN_PROGRESS,"2024-03-20 14:00","40");
-        taskManager.createTask(task);
+        task = new Task("0", "0", Status.NEW, "2000-01-02 00:00", "1440");
+        manager.createTask(task);
+
+        task = new Task("1", "1", Status.NEW, "2000-01-02 12:00", "1440");
+        manager.createTask(task);
+
+        task = new Task("2", "2", Status.NEW, "2000-01-01 12:00", "1440");
+        manager.createTask(task);
+
+        task = new Task("3", "3", Status.NEW, "2000-01-02 00:00", "2400");
+        manager.createTask(task);
+
+        task = new Task("4", "4", Status.NEW, "2000-01-03 00:00", "1440");
+        manager.createTask(task);
+
+        System.out.println((manager.getPrioritizedTasks()));
+        System.out.println(manager.getTasks());
+
+//        task = new Task("1", "1");
+//        taskManager.createTask(task);
+//        task = new Task("3", "3", Status.IN_PROGRESS, "2024-03-20 14:00", "40");
+//        taskManager.createTask(task);
+//        task = new Task("3", "3", Status.IN_PROGRESS, "2025-03-20 14:00", "40");
+//        taskManager.createTask(task);
+//        epic = new Epic("name3", "description");
+//        taskManager.createEpic(epic);
+//        subtask = new Subtask("name3", "description2", Status.NEW, 3, "2014-04-08 12:30", "180");
+//        taskManager.createSubtask(subtask);
+//        subtask = new Subtask("name4", "description2", Status.NEW, 3, "2013-04-08 12:30", "180");
+//        taskManager.createSubtask(subtask);
+//        epic = new Epic("name5", "description");
+//        taskManager.createEpic(epic);
+//        System.out.println(taskManager.getPrioritizedTasks());
+//        System.out.println(taskManager.getTasks());
+//        System.out.println(taskManager.getEpics());
+//        System.out.println(taskManager.getSubtasks());
+
+
 //        epic = new Epic("name3", "description");
 //        taskManager.createEpic(epic);
 //        subtask = new Subtask("name3", "description2", Status.NEW, 3, "2014-04-08 12:30", "180");
 //        taskManager.createSubtask(subtask);
 //        subtask = new Subtask("name3", "description3", Status.NEW, 3, "2014-04-08 18:00", "60");
 //        taskManager.createSubtask(subtask);
-        System.out.println(taskManager.getTasks());
 //        System.out.println(taskManager.getEpics());
 //        System.out.println(taskManager.getSubtasks());
 

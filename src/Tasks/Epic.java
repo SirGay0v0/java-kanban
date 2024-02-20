@@ -64,7 +64,18 @@ public class Epic extends Task {
 
     @Override
     public String toString() {
-        return "\nEpic{" +
+        if (startTime == null) {
+            return "\nEpic{" +
+                    "name='" + getName() + '\'' +
+                    ", description='" + getDescription() + '\'' +
+                    ", id=" + getId() +
+                    ", epicStatus=" + getEpicStatus() +
+                    ", subtasksList=" + getIdSubTasks() +
+                    ", startTime=" + "n/a" +
+                    ", duration=" + "n/a" +
+                    ", endTime=" + "n/a" +
+                    '}';
+        } else return "\nEpic{" +
                 "name='" + getName() + '\'' +
                 ", description='" + getDescription() + '\'' +
                 ", id=" + getId() +

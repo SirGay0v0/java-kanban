@@ -5,7 +5,6 @@ import Tasks.Epic;
 import Tasks.Subtask;
 import Tasks.Task;
 
-import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -30,6 +29,7 @@ public class InMemoryTaskManager implements TaskManager {
     private final TaskCreator taskCreator = new TaskCreator();
     private final TaskDeleter taskDeleter = new TaskDeleter();
     private final TaskUpdater taskUpdater = new TaskUpdater();
+    private final TaskTimeValidation timeValidation = new TaskTimeValidation();
     protected int id = 0;
 
 
@@ -46,8 +46,12 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void createTask(Task task) {
-        taskCreator.createTask(taskHashMap, task, id);
-        id++;
+        Collection<? extends Task> set = getPrioritizedTasks();
+        if (timeValidation.validate(task, set) != null) {
+            taskCreator.createTask(taskHashMap, task, id);
+            id++;
+        } else System.out.println("Задача не была создана, ввиду пересечения по времени" +
+                " с уже заплпнированными задачами");
     }
 
     @Override
@@ -58,8 +62,12 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void createSubtask(Subtask subtask) {
-        taskCreator.createSubtask((ArrayList<HashMap>) listOfTasks, subtask, id);
-        id++;
+        Collection<? extends Task> set = getPrioritizedTasks();
+        if (timeValidation.validate(subtask, set) != null) {
+            taskCreator.createSubtask((ArrayList<HashMap>) listOfTasks, subtask, id);
+            id++;
+        } else System.out.println("Задача не была создана, ввиду пересечения по времени" +
+                " с уже заплпнированными задачами");
     }
 
     @Override
@@ -164,10 +172,25 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Collection<? extends Task> getPrioritizedTasks() {
-        TreeSet<? extends Task> priorityTree = new TreeSet<>();
-
-
-
+        TreeSet<Task> priorityTree = new TreeSet<>(new Comparator<>() {
+            @Override
+            public int compare(Task o1, Task o2) {
+                if (o1.getStartTime() != null && o2.getStartTime() != null) {
+                    if (o1.getStartTime().isAfter(o2.getStartTime())) {
+                        return 1;
+                    } else if (o1.getStartTime() == (o2.getStartTime())) {
+                        return -1;
+                    }
+                } else if (o1.getStartTime() == null && o2.getStartTime() != null) {
+                    return 1;
+                } else if (o1.getStartTime() != null && o2.getStartTime() == null) {
+                    return -1;
+                }
+                return -1;
+            }
+        });
+        priorityTree.addAll(taskHashMap.values());
+        priorityTree.addAll(subtaskHashMap.values());
         return priorityTree;
     }
 }
