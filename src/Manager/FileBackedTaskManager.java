@@ -330,4 +330,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         super.deleteSubtasks();
         save();
     }
+    @Override
+    public Collection<? extends Task> getPrioritizedTasks(){
+
+        return super.getPrioritizedTasks();
+    }
 }
