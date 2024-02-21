@@ -31,6 +31,7 @@ public class InMemoryTaskManager implements TaskManager {
     private final TaskUpdater taskUpdater = new TaskUpdater();
     private final TaskTimeValidation timeValidation = new TaskTimeValidation();
     protected int id = 0;
+    protected TreeSet<Task> priorityTree;
 
 
     public InMemoryTaskManager(HistoryManager inMemoryHistoryManager) {
@@ -42,6 +43,23 @@ public class InMemoryTaskManager implements TaskManager {
         listOfTasks.add(1, (HashMap<Integer, Epic>) epicHashMap);
         listOfTasks.add(2, (HashMap<Integer, Subtask>) subtaskHashMap);
         this.inMemoryHistoryManager = inMemoryHistoryManager;
+        priorityTree = new TreeSet<>(new Comparator<>() {
+            @Override
+            public int compare(Task o1, Task o2) {
+                if (o1.getStartTime() != null && o2.getStartTime() != null) {
+                    if (o1.getStartTime().isAfter(o2.getStartTime())) {
+                        return 1;
+                    } else if (o1.getStartTime() == (o2.getStartTime())) {
+                        return -1;
+                    }
+                } else if (o1.getStartTime() == null && o2.getStartTime() != null) {
+                    return 1;
+                } else if (o1.getStartTime() != null && o2.getStartTime() == null) {
+                    return -1;
+                }
+                return -1;
+            }
+        });
     }
 
     @Override
@@ -50,6 +68,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (timeValidation.validate(task, set) != null) {
             taskCreator.createTask(taskHashMap, task, id);
             id++;
+            priorityTree.add(task);
         } else System.out.println("Задача не была создана, ввиду пересечения по времени" +
                 " с уже заплпнированными задачами");
     }
@@ -66,6 +85,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (timeValidation.validate(subtask, set) != null) {
             taskCreator.createSubtask((ArrayList<HashMap>) listOfTasks, subtask, id);
             id++;
+            priorityTree.add(subtask);
         } else System.out.println("Задача не была создана, ввиду пересечения по времени" +
                 " с уже заплпнированными задачами");
     }
@@ -172,25 +192,6 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Collection<? extends Task> getPrioritizedTasks() {
-        TreeSet<Task> priorityTree = new TreeSet<>(new Comparator<>() {
-            @Override
-            public int compare(Task o1, Task o2) {
-                if (o1.getStartTime() != null && o2.getStartTime() != null) {
-                    if (o1.getStartTime().isAfter(o2.getStartTime())) {
-                        return 1;
-                    } else if (o1.getStartTime() == (o2.getStartTime())) {
-                        return -1;
-                    }
-                } else if (o1.getStartTime() == null && o2.getStartTime() != null) {
-                    return 1;
-                } else if (o1.getStartTime() != null && o2.getStartTime() == null) {
-                    return -1;
-                }
-                return -1;
-            }
-        });
-        priorityTree.addAll(taskHashMap.values());
-        priorityTree.addAll(subtaskHashMap.values());
         return priorityTree;
     }
 }
