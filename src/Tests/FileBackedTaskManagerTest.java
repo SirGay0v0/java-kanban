@@ -1,10 +1,8 @@
-package Tests;
+package tests;
 
-import Manager.FileBackedTaskManager;
 import Manager.Managers;
 import Manager.TaskManager;
 import Tasks.Epic;
-import Tasks.Task;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -14,211 +12,211 @@ import java.util.Collections;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class FileBuckedTaskManagerTest extends TaskManagerTest {
+public class FileBackedTaskManagerTest extends TaskManagerTest {
 
     @Test
     public void getTasks() {
-        getTasks("bucked");
+        getTasks(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void getTasksWhenCollectionEmpty() {
-        getTasksWhenCollectionEmpty("bucked");
+        getTasksWhenCollectionEmpty(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void getEpics() {
-        getEpics("bucked");
+        getEpics(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void getEpicsWhenCollectionEmpty() {
-        getEpicsWhenCollectionEmpty("bucked");
+        getEpicsWhenCollectionEmpty(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void getSubtasks() {
-        getSubtasks("bucked");
+        getSubtasks(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void getSubtasksWhenCollectionEmpty() {
-        getSubtasksWhenCollectionEmpty("bucked");
+        getSubtasksWhenCollectionEmpty(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void createTask() {
-        createTask("bucked");
+        createTask(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void createEpic() {
-        createEpic("bucked");
+        createEpic(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void createSubtask() {
-        createSubtask("bucked");
+        createSubtask(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void deleteTasks() {
-        deleteTasks("bucked");
+        deleteTasks(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void deleteEpics() {
-        deleteEpics("bucked");
+        deleteEpics(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void deleteSubtasks() {
-        deleteSubtasks("bucked");
+        deleteSubtasks(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void getTaskById() {
-        getTaskById("bucked");
+        getTaskById(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void getTaskByIdWhenCollectionEmpty() {
-        getTaskByIdWhenCollectionEmpty("bucked");
+        getTaskByIdWhenCollectionEmpty(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void getTaskByIdWhenIdIncorect() {
-        getTaskByIdWhenIdIncorect("bucked");
+        getTaskByIdWhenIdIncorect(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void getEpicById() {
-        getEpicById("bucked");
+        getEpicById(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void getEpicByIdWhenCollectionEmpty() {
-        getEpicByIdWhenCollectionEmpty("bucked");
+        getEpicByIdWhenCollectionEmpty(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void getEpicByIdWhenIdIncorect() {
-        getEpicByIdWhenIdIncorect("bucked");
+        getEpicByIdWhenIdIncorect(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void getSubtaskById() {
-        getSubtaskById("bucked");
+        getSubtaskById(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void getSubtaskByIdWhenCollectionEmpty() {
-        getSubtaskByIdWhenCollectionEmpty("bucked");
+        getSubtaskByIdWhenCollectionEmpty(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void getSubtaskByIdWhenIdIncorect() {
-        getSubtaskByIdWhenIdIncorect("bucked");
+        getSubtaskByIdWhenIdIncorect(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void updateTask() {
-        updateTask("bucked");
+        updateTask(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void updateTaskWhenCollectionEmpty() {
-        updateTaskWhenCollectionEmpty("bucked");
+        updateTaskWhenCollectionEmpty(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void updateTaskWhenIdIncorect() {
-        updateTaskWhenIdIncorect("bucked");
+        updateTaskWhenIdIncorect(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void updateEpic() {
-        updateEpic("bucked");
+        updateEpic(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void updateEpicWhenCollectionEmpty() {
-        updateEpicWhenCollectionEmpty("bucked");
+        updateEpicWhenCollectionEmpty(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void updateEpicWhenIdIncorect() {
-        updateEpicWhenIdIncorect("bucked");
+        updateEpicWhenIdIncorect(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void updateSubtask() {
-        updateSubtask("bucked");
+        updateSubtask(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void updateSubtaskWhenCollectionEmpty() {
-        updateSubtaskWhenCollectionEmpty("bucked");
+        updateSubtaskWhenCollectionEmpty(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void updateSubtaskWhenIdIncorect() {
-        updateSubtaskWhenIdIncorect("bucked");
+        updateSubtaskWhenIdIncorect(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void deleteTaskById() {
-        deleteTaskById("bucked");
+        deleteTaskById(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void deleteTaskByIdWhenCollectionEmpty() {
-        deleteTaskByIdWhenCollectionEmpty("bucked");
+        deleteTaskByIdWhenCollectionEmpty(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void deleteEpicById() {
-        deleteEpicById("bucked");
+        deleteEpicById(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void deleteEpicByIdWhenCollectionEmpty() {
-        deleteEpicByIdWhenCollectionEmpty("bucked");
+        deleteEpicByIdWhenCollectionEmpty(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void deleteSubtaskById() {
-        deleteSubtaskById("bucked");
+        deleteSubtaskById(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void deleteSubtaskByIdWhenCollectionEmpty() {
-        deleteSubtaskByIdWhenCollectionEmpty("bucked");
+        deleteSubtaskByIdWhenCollectionEmpty(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void getAllSubtasksFromEpic() {
-        getAllSubtasksFromEpic("bucked");
+        getAllSubtasksFromEpic(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void getAllSubtasksFromEpicWhenCollectionEmpty() {
-        getAllSubtasksFromEpicWhenCollectionEmpty("bucked");
+        getAllSubtasksFromEpicWhenCollectionEmpty(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void getAllSubtasksFromEpicWhenIdIncorrect() {
-        getAllSubtasksFromEpicWhenIdIncorrect("bucked");
+        getAllSubtasksFromEpicWhenIdIncorrect(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void getHistory() {
-        getHistory("bucked");
+        getHistory(TestMode.FILEBACKEDMODE);
     }
 
     @Test
     public void getHistoryWhenHistoryEmpty() {
-        getHistoryWhenHistoryEmpty("bucked");
+        getHistoryWhenHistoryEmpty(TestMode.FILEBACKEDMODE);
     }
 
     @Test

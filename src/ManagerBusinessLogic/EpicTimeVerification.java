@@ -14,16 +14,24 @@ public class EpicTimeVerification {
 
         LocalDateTime epicStartTime = epic.getIdSubTasks().stream()
                 .map(idSubtask -> (Subtask) subtaskHashMap.get(idSubtask))
-                .min(Comparator.comparing(Task::getStartTime))
+                .min(Comparator.comparing(Task::getStartTime,
+                        Comparator.nullsFirst(Comparator.reverseOrder())))
                 .stream().findFirst().get().getStartTime();
+        if (epicStartTime != null) {
+            LocalDateTime epicEndTime = epic.getIdSubTasks().stream()
+                    .map(idSubtask -> (Subtask) subtaskHashMap.get(idSubtask))
+                    .max(Comparator.comparing(Task::getEndTime))
+                    .stream().findFirst().get().getEndTime();
 
-        LocalDateTime epicEndTime = epic.getIdSubTasks().stream()
-                .map(idSubtask -> (Subtask) subtaskHashMap.get(idSubtask))
-                .max(Comparator.comparing(Task::getEndTime))
-                .stream().findFirst().get().getEndTime();
+            epic.setStartTime(epicStartTime);
+            epic.setDuration(Duration.between(epicStartTime, epicEndTime));
+            epic.setEndTime(epicEndTime);
+        } else {
+            epic.setStartTime((LocalDateTime) null);
+            epic.setDuration((Duration) null);
+            epic.setEndTime(null);
+        }
 
-        epic.setStartTime(epicStartTime);
-        epic.setDuration(Duration.between(epicStartTime, epicEndTime));
-        epic.setEndTime(epicEndTime);
+
     }
 }

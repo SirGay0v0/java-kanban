@@ -1,6 +1,6 @@
-package Tests;
+package tests;
 
-import Exceptions.ManagerSaveException;
+
 import Manager.Managers;
 import Manager.TaskManager;
 import Tasks.Epic;
@@ -9,7 +9,7 @@ import Tasks.Subtask;
 import Tasks.Task;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
+
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,8 +17,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public abstract class TaskManagerTest<T extends TaskManager> {
     TaskManager taskManager;
 
-    public void generateRightManager(String mode) {
-        if (mode.equals("bucked")) {
+    public void generateRightManager(TestMode mode) {
+        if (mode==TestMode.FILEBACKEDMODE) {
             File file = new File("save.csv");
             clearFile(file);
             taskManager = Managers.getDefaultFileBucked(file);
@@ -36,7 +36,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         }
     }
 
-    public void getTasks(String mode) {
+    public void getTasks(TestMode mode) {
         generateRightManager(mode);
 
         Task task1 = new Task("test1", "test1", Status.NEW);
@@ -53,14 +53,14 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         assertEquals(testList, listOfTasks);
     }
 
-    public void getTasksWhenCollectionEmpty(String mode) {
+    public void getTasksWhenCollectionEmpty(TestMode mode) {
         generateRightManager(mode);
         Collection testList = new ArrayList<>();
         Collection listOfTasks = taskManager.getTasks();
         assertEquals(testList, listOfTasks);
     }
 
-    public void getEpics(String mode) {
+    public void getEpics(TestMode mode) {
         generateRightManager(mode);
 
         Epic epic1 = new Epic("test1", "test1");
@@ -75,14 +75,14 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         assertEquals(testList, listOfTasks);
     }
 
-    public void getEpicsWhenCollectionEmpty(String mode) {
+    public void getEpicsWhenCollectionEmpty(TestMode mode) {
         generateRightManager(mode);
         Collection testList = new ArrayList<>();
         Collection listOfTasks = taskManager.getEpics();
         assertEquals(testList, listOfTasks);
     }
 
-    public void getSubtasks(String mode) {
+    public void getSubtasks(TestMode mode) {
         generateRightManager(mode);
 
         Epic epic = new Epic("t", "t");
@@ -102,28 +102,28 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         assertEquals(testList, listOfTasks);
     }
 
-    public void getSubtasksWhenCollectionEmpty(String mode) {
+    public void getSubtasksWhenCollectionEmpty(TestMode mode) {
         generateRightManager(mode);
         Collection testList = new ArrayList<>();
         Collection listOfTasks = taskManager.getSubtasks();
         assertEquals(testList, listOfTasks);
     }
 
-    public void createTask(String mode) {
+    public void createTask(TestMode mode) {
         generateRightManager(mode);
         Task task = new Task("t", "t");
         taskManager.createTask(task);
         assertEquals(task, taskManager.getTaskById(0));
     }
 
-    public void createEpic(String mode) {
+    public void createEpic(TestMode mode) {
         generateRightManager(mode);
         Epic epic = new Epic("t", "t");
         taskManager.createEpic(epic);
         assertEquals(epic, taskManager.getEpicById(0));
     }
 
-    public void createSubtask(String mode) {
+    public void createSubtask(TestMode mode) {
         generateRightManager(mode);
         Epic epic = new Epic("j", "f");
         Subtask subtask = new Subtask("t", "t", Status.NEW, 0);
@@ -132,7 +132,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         assertEquals(subtask, taskManager.getSubtaskById(1));
     }
 
-    public void deleteTasks(String mode) {
+    public void deleteTasks(TestMode mode) {
         generateRightManager(mode);
         Task task = new Task("t", "t");
         taskManager.createTask(task);
@@ -142,7 +142,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         assertEquals(testCollection, testMethod);
     }
 
-    public void deleteEpics(String mode) {
+    public void deleteEpics(TestMode mode) {
         generateRightManager(mode);
         Epic epic = new Epic("l", "l");
         taskManager.createEpic(epic);
@@ -152,7 +152,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         assertEquals(testCollection, testMethod);
     }
 
-    public void deleteSubtasks(String mode) {
+    public void deleteSubtasks(TestMode mode) {
         generateRightManager(mode);
         Epic epic = new Epic("l", "l");
         Subtask subtask = new Subtask("t", "t", Status.NEW, 0);
@@ -164,7 +164,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         assertEquals(testCollection, testMethod);
     }
 
-    public void getTaskById(String mode) {
+    public void getTaskById(TestMode mode) {
         generateRightManager(mode);
         Task task = new Task("t", "t");
         taskManager.createTask(task);
@@ -172,14 +172,14 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         assertEquals(task, testTask);
     }
 
-    public void getTaskByIdWhenCollectionEmpty(String mode) {
+    public void getTaskByIdWhenCollectionEmpty(TestMode mode) {
         assertThrows(NullPointerException.class, () -> {
             generateRightManager(mode);
             Task task = taskManager.getTaskById(0);
         });
     }
 
-    public void getTaskByIdWhenIdIncorect(String mode) {
+    public void getTaskByIdWhenIdIncorect(TestMode mode) {
         assertThrows(NullPointerException.class, () -> {
             generateRightManager(mode);
             Task task = new Task("t", "t");
@@ -188,7 +188,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         });
     }
 
-    public void getEpicById(String mode) {
+    public void getEpicById(TestMode mode) {
         generateRightManager(mode);
         Epic epic = new Epic("t", "t");
         taskManager.createEpic(epic);
@@ -196,14 +196,14 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         assertEquals(epic, testTask);
     }
 
-    public void getEpicByIdWhenCollectionEmpty(String mode) {
+    public void getEpicByIdWhenCollectionEmpty(TestMode mode) {
         assertThrows(NullPointerException.class, () -> {
             generateRightManager(mode);
             Epic epic = taskManager.getEpicById(0);
         });
     }
 
-    public void getEpicByIdWhenIdIncorect(String mode) {
+    public void getEpicByIdWhenIdIncorect(TestMode mode) {
         assertThrows(NullPointerException.class, () -> {
             generateRightManager(mode);
             Epic epic = new Epic("t", "t");
@@ -212,7 +212,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         });
     }
 
-    public void getSubtaskById(String mode) {
+    public void getSubtaskById(TestMode mode) {
         generateRightManager(mode);
         Epic epic = new Epic("t", "t");
         Subtask subtask = new Subtask("t", "t", Status.NEW, 0);
@@ -222,14 +222,14 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         assertEquals(subtask, subtasktest);
     }
 
-    public void getSubtaskByIdWhenCollectionEmpty(String mode) {
+    public void getSubtaskByIdWhenCollectionEmpty(TestMode mode) {
         assertThrows(NullPointerException.class, () -> {
             generateRightManager(mode);
             Subtask task = taskManager.getSubtaskById(0);
         });
     }
 
-    public void getSubtaskByIdWhenIdIncorect(String mode) {
+    public void getSubtaskByIdWhenIdIncorect(TestMode mode) {
         assertThrows(NullPointerException.class, () -> {
             generateRightManager(mode);
             Epic epic = new Epic("t", "t");
@@ -240,7 +240,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         });
     }
 
-    public void updateTask(String mode) {
+    public void updateTask(TestMode mode) {
         generateRightManager(mode);
         Task testTask = new Task("f", "f");
         taskManager.createTask(testTask);
@@ -249,7 +249,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         assertEquals(updateTestTask, taskManager.getTaskById(0));
     }
 
-    public void updateTaskWhenCollectionEmpty(String mode) {
+    public void updateTaskWhenCollectionEmpty(TestMode mode) {
         generateRightManager(mode);
         Task updateTestTask = new Task("a", "a");
         taskManager.updateTask(updateTestTask, 0);
@@ -258,7 +258,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         assertEquals(emptyCollection, testCollection);
     }
 
-    public void updateTaskWhenIdIncorect(String mode) {
+    public void updateTaskWhenIdIncorect(TestMode mode) {
         generateRightManager(mode);
         Task updateTestTask = new Task("a", "a");
         taskManager.createTask(updateTestTask);
@@ -268,7 +268,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         assertEquals(collection, testCollection);
     }
 
-    public void updateEpic(String mode) {
+    public void updateEpic(TestMode mode) {
         generateRightManager(mode);
         Epic testTask = new Epic("f", "f");
         taskManager.createEpic(testTask);
@@ -277,7 +277,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         assertEquals(updateTestTask, taskManager.getEpicById(0));
     }
 
-    public void updateEpicWhenCollectionEmpty(String mode) {
+    public void updateEpicWhenCollectionEmpty(TestMode mode) {
         generateRightManager(mode);
         Epic updateTestTask = new Epic("a", "a");
         taskManager.updateEpic(updateTestTask, 0);
@@ -286,7 +286,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         assertEquals(emptyCollection, testCollection);
     }
 
-    public void updateEpicWhenIdIncorect(String mode) {
+    public void updateEpicWhenIdIncorect(TestMode mode) {
         generateRightManager(mode);
         Epic updateTestTask = new Epic("a", "a");
         taskManager.createEpic(updateTestTask);
@@ -296,7 +296,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         assertEquals(collection, testCollection);
     }
 
-    public void updateSubtask(String mode) {
+    public void updateSubtask(TestMode mode) {
         generateRightManager(mode);
         Epic testTask = new Epic("f", "f");
         Subtask testSubtask = new Subtask("f", "f", Status.NEW, 0);
@@ -307,7 +307,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         assertEquals(updateSubtask, taskManager.getSubtaskById(1));
     }
 
-    public void updateSubtaskWhenCollectionEmpty(String mode) {
+    public void updateSubtaskWhenCollectionEmpty(TestMode mode) {
         generateRightManager(mode);
 
         Subtask updateSubtask = new Subtask("a", "a", Status.NEW, 0);
@@ -317,7 +317,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         assertEquals(emptyCollection, testCollection);
     }
 
-    public void updateSubtaskWhenIdIncorect(String mode) {
+    public void updateSubtaskWhenIdIncorect(TestMode mode) {
         generateRightManager(mode);
         Epic testTask = new Epic("f", "f");
         Subtask testSubtask = new Subtask("f", "f", Status.NEW, 0);
@@ -330,7 +330,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         assertEquals(collection, testCollection);
     }
 
-    public void deleteTaskById(String mode) {
+    public void deleteTaskById(TestMode mode) {
         generateRightManager(mode);
         Task testTask = new Task("f", "f");
         taskManager.createTask(testTask);
@@ -338,13 +338,13 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         assertEquals(Collections.EMPTY_LIST, taskManager.getTasks());
     }
 
-    public void deleteTaskByIdWhenCollectionEmpty(String mode) {
+    public void deleteTaskByIdWhenCollectionEmpty(TestMode mode) {
             generateRightManager(mode);
             taskManager.deleteTaskById(0);
         assertEquals(Collections.EMPTY_LIST, taskManager.getTasks());
     }
 
-    public void deleteEpicById(String mode) {
+    public void deleteEpicById(TestMode mode) {
             generateRightManager(mode);
             Epic testTask = new Epic("f", "f");
             taskManager.createEpic(testTask);
@@ -352,13 +352,13 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         assertEquals(Collections.EMPTY_LIST, taskManager.getEpics());
     }
 
-    public void deleteEpicByIdWhenCollectionEmpty(String mode) {
+    public void deleteEpicByIdWhenCollectionEmpty(TestMode mode) {
             generateRightManager(mode);
             taskManager.deleteEpicById(0);
         assertEquals(Collections.EMPTY_LIST, taskManager.getEpics());
     }
 
-    public void deleteSubtaskById(String mode) {
+    public void deleteSubtaskById(TestMode mode) {
 
             generateRightManager(mode);
             Epic testEpic = new Epic("f", "f");
@@ -369,13 +369,13 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         assertEquals(Collections.EMPTY_LIST, taskManager.getSubtasks());
     }
 
-    public void deleteSubtaskByIdWhenCollectionEmpty(String mode) {
+    public void deleteSubtaskByIdWhenCollectionEmpty(TestMode mode) {
             generateRightManager(mode);
             taskManager.deleteTaskById(0);
         assertEquals(Collections.EMPTY_LIST, taskManager.getSubtasks());
     }
 
-    public void getAllSubtasksFromEpic(String mode) {
+    public void getAllSubtasksFromEpic(TestMode mode) {
         generateRightManager(mode);
         Epic testEpic = new Epic("f", "f");
         Subtask testTask = new Subtask("f", "f", Status.NEW, 0);
@@ -386,7 +386,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         assertEquals(collection, testCollection);
     }
 
-    public void getAllSubtasksFromEpicWhenCollectionEmpty(String mode) {
+    public void getAllSubtasksFromEpicWhenCollectionEmpty(TestMode mode) {
         generateRightManager(mode);
         Epic testEpic = new Epic("f", "f");
         taskManager.createEpic(testEpic);
@@ -395,7 +395,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         assertEquals(collection, testCollection);
     }
 
-    public void getAllSubtasksFromEpicWhenIdIncorrect(String mode) {
+    public void getAllSubtasksFromEpicWhenIdIncorrect(TestMode mode) {
         assertThrows(NullPointerException.class, () -> {
             generateRightManager(mode);
             Epic testEpic = new Epic("f", "f");
@@ -406,7 +406,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         });
     }
 
-    public void getHistory(String mode) {
+    public void getHistory(TestMode mode) {
         generateRightManager(mode);
         Task task1 = new Task("a", "a");
         Task task2 = new Task("b", "b");
@@ -418,7 +418,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         assertEquals(testCollection, taskManager.getHistory());
     }
 
-    public void getHistoryWhenHistoryEmpty(String mode) {
+    public void getHistoryWhenHistoryEmpty(TestMode mode) {
         generateRightManager(mode);
         assertNull(taskManager.getHistory());
     }

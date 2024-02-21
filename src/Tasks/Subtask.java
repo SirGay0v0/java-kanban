@@ -31,16 +31,28 @@ public class Subtask extends Task {
 
     @Override
     public String toString() {
-        return "\nSubtask{" +
-                "name='" + getName() + '\'' +
-                ", description='" + getDescription() + '\'' +
-                ", id=" + getId() +
-                ", subtaskStatus=" + getSubtaskStatus() +
-                ", epicOwnerId=" + getEpicOwnerId() +
-                ", startTime=" + getStartTime() +
-                ", duration=" + getDuration() +
-                ", endTime=" + getEndTime() +
-                "}";
+        if (getStartTime() == null) {
+            return "\nSubtask{" +
+                    "name='" + getName() + '\'' +
+                    ", description='" + getDescription() + '\'' +
+                    ", id=" + getId() +
+                    ", subtaskStatus=" + getSubtaskStatus() +
+                    ", epicOwnerId=" + getEpicOwnerId() +
+                    ", startTime=" + "n/a" +
+                    ", duration=" + "n/a" +
+                    ", endTime=" + "n/a" +
+                    '}';
+        } else
+            return "\nSubtask{" +
+                    "name='" + getName() + '\'' +
+                    ", description='" + getDescription() + '\'' +
+                    ", id=" + getId() +
+                    ", subtaskStatus=" + getSubtaskStatus() +
+                    ", epicOwnerId=" + getEpicOwnerId() +
+                    ", startTime=" + getStartTime() +
+                    ", duration=" + getDuration() +
+                    ", endTime=" + getEndTime() +
+                    "}";
     }
 
 }

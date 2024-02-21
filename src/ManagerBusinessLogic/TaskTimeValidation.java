@@ -14,16 +14,16 @@ public class TaskTimeValidation {
             LocalDateTime taskEndTime = task.getEndTime();
             List correctionList1 = tasksTreeSet.stream()
                     .filter(taskFromTaskSet ->
-                            (taskFromTaskSet.getStartTime().isBefore(taskStartTime) &&
-                                    taskFromTaskSet.getEndTime().isBefore(taskStartTime))
-                                    |
+                            (       (taskFromTaskSet.getStartTime() == null)
+                                    ||
                                     (taskFromTaskSet.getStartTime().isAfter(taskEndTime) &&
                                             taskFromTaskSet.getEndTime().isAfter(taskEndTime))
-                                    |
-                                    (taskFromTaskSet.getStartTime() == null)
-                                    |
+                                    ||
+                                    taskFromTaskSet.getStartTime().isBefore(taskStartTime) &&
+                                            taskFromTaskSet.getEndTime().isBefore(taskStartTime))
+                                    ||
                                     (taskFromTaskSet.getStartTime().isEqual(taskEndTime))
-                                    |
+                                    ||
                                     (taskFromTaskSet.getEndTime().isEqual(taskStartTime)))
                     .collect(Collectors.toList());
 
@@ -31,6 +31,6 @@ public class TaskTimeValidation {
                 return task;
             } else return null;
         }
-        return null;
+        return task;
     }
 }

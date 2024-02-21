@@ -1,4 +1,4 @@
-package Tests;
+package tests;
 
 import org.junit.jupiter.api.Test;
 
@@ -6,201 +6,201 @@ public class InMemoryTaskManagerTest extends TaskManagerTest {
 
     @Test
     public void getTasks() {
-        getTasks("");
+        getTasks(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void getTasksWhenCollectionEmpty() {
-        getTasksWhenCollectionEmpty("");
+        getTasksWhenCollectionEmpty(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void getEpics() {
-        getEpics("");
+        getEpics(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void getEpicsWhenCollectionEmpty() {
-        getEpicsWhenCollectionEmpty("");
+        getEpicsWhenCollectionEmpty(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void getSubtasks() {
-        getSubtasks("");
+        getSubtasks(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void getSubtasksWhenCollectionEmpty() {
-        getSubtasksWhenCollectionEmpty("");
+        getSubtasksWhenCollectionEmpty(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void createTask() {
-        createTask("");
+        createTask(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void createEpic() {
-        createEpic("");
+        createEpic(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void createSubtask() {
-        createSubtask("");
+        createSubtask(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void deleteTasks() {
-        deleteTasks("");
+        deleteTasks(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void deleteEpics() {
-        deleteEpics("");
+        deleteEpics(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void deleteSubtasks() {
-        deleteSubtasks("");
+        deleteSubtasks(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void getTaskById() {
-        getTaskById("");
+        getTaskById(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void getTaskByIdWhenCollectionEmpty() {
-        getTaskByIdWhenCollectionEmpty("");
+        getTaskByIdWhenCollectionEmpty(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void getTaskByIdWhenIdIncorect() {
-        getTaskByIdWhenIdIncorect("");
+        getTaskByIdWhenIdIncorect(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void getEpicByIdWhenCollectionEmpty() {
-        getEpicByIdWhenCollectionEmpty("");
+        getEpicByIdWhenCollectionEmpty(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void getEpicByIdWhenIdIncorect() {
-        getEpicByIdWhenIdIncorect("");
+        getEpicByIdWhenIdIncorect(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void getSubtaskById() {
-        getSubtaskById("");
+        getSubtaskById(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void getSubtaskByIdWhenCollectionEmpty() {
-        getSubtaskByIdWhenCollectionEmpty("");
+        getSubtaskByIdWhenCollectionEmpty(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void getSubtaskByIdWhenIdIncorect() {
-        getSubtaskByIdWhenIdIncorect("");
+        getSubtaskByIdWhenIdIncorect(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void updateTask() {
-        updateTask("");
+        updateTask(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void updateTaskWhenCollectionEmpty() {
-        updateTaskWhenCollectionEmpty("");
+        updateTaskWhenCollectionEmpty(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void updateTaskWhenIdIncorect() {
-        updateTaskWhenIdIncorect("");
+        updateTaskWhenIdIncorect(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void updateEpic() {
-        updateEpic("");
+        updateEpic(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void updateEpicWhenCollectionEmpty() {
-        updateEpicWhenCollectionEmpty("");
+        updateEpicWhenCollectionEmpty(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void updateEpicWhenIdIncorect() {
-        updateEpicWhenIdIncorect("");
+        updateEpicWhenIdIncorect(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void updateSubtask() {
-        updateSubtask("");
+        updateSubtask(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void updateSubtaskWhenCollectionEmpty() {
-        updateSubtaskWhenCollectionEmpty("");
+        updateSubtaskWhenCollectionEmpty(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void updateSubtaskWhenIdIncorect() {
-        updateSubtaskWhenIdIncorect("");
+        updateSubtaskWhenIdIncorect(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void deleteTaskById() {
-        deleteTaskById("");
+        deleteTaskById(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void deleteTaskByIdWhenCollectionEmpty() {
-        deleteTaskByIdWhenCollectionEmpty("");
+        deleteTaskByIdWhenCollectionEmpty(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void deleteEpicById() {
-        deleteEpicById("");
+        deleteEpicById(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void deleteEpicByIdWhenCollectionEmpty() {
-        deleteEpicByIdWhenCollectionEmpty("");
+        deleteEpicByIdWhenCollectionEmpty(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void deleteSubtaskById() {
-        deleteSubtaskById("");
+        deleteSubtaskById(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void deleteSubtaskByIdWhenCollectionEmpty() {
-        deleteSubtaskByIdWhenCollectionEmpty("");
+        deleteSubtaskByIdWhenCollectionEmpty(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void getAllSubtasksFromEpic() {
-        getAllSubtasksFromEpic("");
+        getAllSubtasksFromEpic(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void getAllSubtasksFromEpicWhenCollectionEmpty() {
-        getAllSubtasksFromEpicWhenCollectionEmpty("");
+        getAllSubtasksFromEpicWhenCollectionEmpty(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void getAllSubtasksFromEpicWhenIdIncorrect() {
-        getAllSubtasksFromEpicWhenIdIncorrect("");
+        getAllSubtasksFromEpicWhenIdIncorrect(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void getHistory() {
-        getHistory("");
+        getHistory(TestMode.INMEMORYMODE);
     }
 
     @Test
     public void getHistoryWhenHistoryEmpty() {
-        getHistoryWhenHistoryEmpty("");
+        getHistoryWhenHistoryEmpty(TestMode.INMEMORYMODE);
     }
 }
