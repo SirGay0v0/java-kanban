@@ -1,7 +1,9 @@
 import Manager.*;
 import Tasks.*;
+import com.google.gson.Gson;
 
 import java.io.File;
+
 
 
 /**
@@ -12,6 +14,7 @@ public class Main {
         File file = new File("save.csv");
         TaskManager manager = Managers.getDefault();
 
+        Gson gson = new Gson();
         Task task;
         Epic epic;
         Subtask subtask;
