@@ -1,41 +1,56 @@
 import Manager.*;
 import Tasks.*;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.File;
-
+import java.io.IOException;
 
 
 /**
  * Все условия проверки, которые были указаны в ТЗ прошли без ошибок.
  */
 public class Main {
-    public static void main(String[] args) {
-        File file = new File("save.csv");
-        TaskManager manager = Managers.getDefault();
+    public static void main(String[] args) throws IOException {
+        HttpTaskServer server = new HttpTaskServer();
 
-        Gson gson = new Gson();
-        Task task;
-        Epic epic;
-        Subtask subtask;
+//        Subtask subtask = new Subtask("name", "desc",
+//                Status.NEW, 0, "2000-01-01 00:00", "1440");
+//        Epic epic = new Epic("epicName", "epicDescription");
+//        GsonBuilder gsonBuilder = new GsonBuilder();
+//        gsonBuilder.setPrettyPrinting();
+//                //.addSerializationExclusionStrategy(new EpicExclusionStrategy());
+//        Gson gson = gsonBuilder.create();
+//        System.out.println(gson.toJson(epic));
+//            Task task = new Task("0", "0", Status.NEW, "2000-01-02 00:00", "1440");
+//            System.out.println(gson.toJson(task));
 
-        task = new Task("0", "0", Status.NEW, "2000-01-02 00:00", "1440");
-        manager.createTask(task);
 
-        task = new Task("1", "1", Status.NEW, "2000-01-02 12:00", "1440");
-        manager.createTask(task);
-
-        task = new Task("2", "2", Status.NEW, "2000-01-01 12:00", "1440");
-        manager.createTask(task);
-
-        task = new Task("3", "3", Status.NEW, "2000-01-02 00:00", "2400");
-        manager.createTask(task);
-
-        task = new Task("4", "4", Status.NEW, "2000-01-03 00:00", "1440");
-        manager.createTask(task);
-
-        System.out.println((manager.getPrioritizedTasks()));
-        System.out.println(manager.getTasks());
+//        File file = new File("save.csv");
+//        TaskManager manager = Managers.getDefault();
+//
+//
+//        Task task;
+//        Epic epic;
+//        Subtask subtask;
+//
+//        task = new Task("0", "0", Status.NEW, "2000-01-02 00:00", "1440");
+//        manager.createTask(task);
+//
+//        task = new Task("1", "1", Status.NEW, "2000-01-02 12:00", "1440");
+//        manager.createTask(task);
+//
+//        task = new Task("2", "2", Status.NEW, "2000-01-01 12:00", "1440");
+//        manager.createTask(task);
+//
+//        task = new Task("3", "3", Status.NEW, "2000-01-02 00:00", "2400");
+//        manager.createTask(task);
+//
+//        task = new Task("4", "4", Status.NEW, "2000-01-03 00:00", "1440");
+//        manager.createTask(task);
+//
+//        System.out.println((manager.getPrioritizedTasks()));
+//        System.out.println(manager.getTasks());
 
 //        task = new Task("1", "1");
 //        taskManager.createTask(task);

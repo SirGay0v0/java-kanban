@@ -28,7 +28,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     public FileBackedTaskManager(HistoryManager inMemoryHistoryManager, File file) {
         super(inMemoryHistoryManager);
         this.file = file;
-        loadFromFile(file);
+        if(file.exists()) {
+            loadFromFile(file);
+        }
     }
 
     /**
@@ -330,6 +332,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         super.deleteSubtasks();
         save();
     }
+
     @Override
     public Collection<? extends Task> getPrioritizedTasks(){
 
