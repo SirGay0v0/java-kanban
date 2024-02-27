@@ -9,14 +9,12 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
-import javax.xml.namespace.QName;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
 
 
 public class HttpTaskServer {
@@ -53,6 +51,18 @@ public class HttpTaskServer {
                     postSubtaskCreate(new String(exchange.getRequestBody().readAllBytes(), DEFAULT_CHARSET), exchange, manager);
                     break;
                 }
+                case POST_UPDATE_TASK: {
+                    postTaskUpdateById(new String(exchange.getRequestBody().readAllBytes(), DEFAULT_CHARSET), exchange, manager);
+                    break;
+                }
+//                case POST_UPDATE_EPIC: {
+//                    postEpicCreate(new String(exchange.getRequestBody().readAllBytes(), DEFAULT_CHARSET), exchange, manager);
+//                    break;
+//                }
+//                case POST_UPDATE_SUBTASK: {
+//                    postSubtaskCreate(new String(exchange.getRequestBody().readAllBytes(), DEFAULT_CHARSET), exchange, manager);
+//                    break;
+//                }
 
                 case UNKNOWN:
                     try (OutputStream os = exchange.getResponseBody()) {
@@ -73,6 +83,12 @@ public class HttpTaskServer {
             return Endpoint.POST_CREATE_EPIC;
         } else if (requestMethod.equals("POST") && parts[parts.length - 1].equals("subtask")) {
             return Endpoint.POST_CREATE_SUBTASK;
+        } else if (requestMethod.equals("POST") && parts[2].equals("task") && parts[parts.length - 1].startsWith("?id=")) {
+            return Endpoint.POST_UPDATE_TASK;
+        } else if (requestMethod.equals("POST") && parts[2].equals("epic") && parts[parts.length - 1].startsWith("?id=")) {
+            return Endpoint.POST_UPDATE_EPIC;
+        } else if (requestMethod.equals("POST") && parts[2].equals("subtask") && parts[parts.length - 1].startsWith("?id=")) {
+            return Endpoint.POST_UPDATE_SUBTASK;
         }
         return Endpoint.UNKNOWN;
     }
@@ -116,6 +132,21 @@ public class HttpTaskServer {
         try (OutputStream os = exchange.getResponseBody()) {
             exchange.sendResponseHeaders(200, 0);
             os.write("Subtask was created!".getBytes());
+        }
+    }
+
+    private void postTaskUpdateById(String jsonBody, HttpExchange exchange, TaskManager manager) throws IOException {
+        JsonObject jsonObject = new JsonParser().parse(jsonBody).getAsJsonObject();
+        String name = jsonObject.get("name").getAsString();
+        String description = jsonObject.get("description").getAsString();
+        String status = jsonObject.get("taskStatus").getAsString();
+        String startTime = jsonObject.get("startTime").getAsString();
+        String duration = jsonObject.get("duration").getAsString();
+        int id = jsonObject.get("id").getAsInt();
+        manager.updateTask(new Task(name, description, Status.valueOf(status), startTime, duration), id);
+        try (OutputStream os = exchange.getResponseBody()) {
+            exchange.sendResponseHeaders(200, 0);
+            os.write(("Task " + id + " was updated!").getBytes());
         }
     }
 
