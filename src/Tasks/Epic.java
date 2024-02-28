@@ -1,5 +1,7 @@
 package Tasks;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,9 +13,12 @@ import java.util.Collection;
  * Статус NEW задается по умолчанию и меняется с появлением Subtask.
  */
 public class Epic extends Task {
+   // @SerializedName("status")
     private Status epicStatus;
-    private Collection<Integer> idSubTasks;
+    private final Collection<Integer> idSubTasks;
+    //@SerializedName("epicStartTime")
     private LocalDateTime startTime;
+   // @SerializedName("epicDuration")
     private Duration duration;
     private LocalDateTime endTime;
 

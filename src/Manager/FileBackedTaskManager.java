@@ -8,10 +8,7 @@ import Tasks.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Класс реализующий интерфейс TaskManager.
@@ -28,7 +25,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     public FileBackedTaskManager(HistoryManager inMemoryHistoryManager, File file) {
         super(inMemoryHistoryManager);
         this.file = file;
-        if(file.exists()) {
+        if (file.exists()) {
             loadFromFile(file);
         }
     }
@@ -130,7 +127,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
         try (BufferedReader buffReader = new BufferedReader(new FileReader(file, StandardCharsets.UTF_8))) {
             String[] taskParts;
-            int maxId = 0;
+            int maxId = -1;
             while (buffReader.ready()) {
                 String stringLine = buffReader.readLine();
                 if (!stringLine.isEmpty() && stringLine.endsWith(",")) {
@@ -174,12 +171,15 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                     }
                 }
             }
-            if (maxId > id) {
+            if (maxId > id || maxId == 0) {
                 id = maxId + 1;
             }
         } catch (IOException ex) {
             throw new ManagerSaveException();
         }
+        taskHashMap.values().stream().map(task -> priorityTree.add(task)).findFirst();
+        subtaskHashMap.values().stream().map(subtask -> priorityTree.add(subtask)).findFirst();
+        epicHashMap.values().stream().map(epic -> priorityTree.add(epic)).findFirst();
     }
 
     /**
@@ -294,6 +294,24 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     @Override
+    public void updateTask(Task task, int id) {
+        super.updateTask(task, id);
+        save();
+    }
+
+    @Override
+    public void updateEpic(Epic epic, int id) {
+        super.updateEpic(epic, id);
+        save();
+    }
+
+    @Override
+    public void updateSubtask(Subtask subtask, int id) {
+        super.updateSubtask(subtask, id);
+        save();
+    }
+
+    @Override
     public Collection getTasks() {
         Collection collection = super.getTasks();
         save();
@@ -334,7 +352,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     @Override
-    public Collection<? extends Task> getPrioritizedTasks(){
+    public Collection<? extends Task> getPrioritizedTasks() {
 
         return super.getPrioritizedTasks();
     }

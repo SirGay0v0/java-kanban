@@ -13,15 +13,20 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) throws IOException {
         HttpTaskServer server = new HttpTaskServer();
-
+//        Epic epic = new Epic("epicName", "epicDescription");
 //        Subtask subtask = new Subtask("name", "desc",
 //                Status.NEW, 0, "2000-01-01 00:00", "1440");
-//        Epic epic = new Epic("epicName", "epicDescription");
+//        Task task = new Task("0", "0", Status.NEW, "2000-01-02 00:00", "1440");
+
+
 //        GsonBuilder gsonBuilder = new GsonBuilder();
 //        gsonBuilder.setPrettyPrinting();
-//                //.addSerializationExclusionStrategy(new EpicExclusionStrategy());
 //        Gson gson = gsonBuilder.create();
+//
+//        System.out.println(gson.toJson(task));
 //        System.out.println(gson.toJson(epic));
+//        System.out.println(gson.toJson(subtask));
+
 //            Task task = new Task("0", "0", Status.NEW, "2000-01-02 00:00", "1440");
 //            System.out.println(gson.toJson(task));
 
