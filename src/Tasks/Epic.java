@@ -1,9 +1,4 @@
 package Tasks;
-
-import com.google.gson.annotations.SerializedName;
-
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -13,68 +8,26 @@ import java.util.Collection;
  * Статус NEW задается по умолчанию и меняется с появлением Subtask.
  */
 public class Epic extends Task {
-   // @SerializedName("status")
-    private Status epicStatus;
     private final Collection<Integer> idSubTasks;
-    //@SerializedName("epicStartTime")
-    private LocalDateTime startTime;
-   // @SerializedName("epicDuration")
-    private Duration duration;
-    private LocalDateTime endTime;
 
     public Epic(String name, String description) {
         super(name, description);
         this.idSubTasks = new ArrayList<>();
-        this.epicStatus = null;
-    }
-
-    public Status getEpicStatus() {
-        return epicStatus;
-    }
-
-    public void setEpicStatus(Status epicStatus) {
-        this.epicStatus = epicStatus;
+        super.setStatus(Status.NEW);
     }
 
     public Collection<Integer> getIdSubTasks() {
         return idSubTasks;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public void setDuration(Duration duration) {
-        this.duration = duration;
-    }
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
-    }
-
-    @Override
-    public LocalDateTime getStartTime() {
-        return startTime;
-    }
-
-    @Override
-    public Duration getDuration() {
-        return duration;
-    }
-
-    @Override
-    public LocalDateTime getEndTime() {
-        return endTime;
-    }
-
     @Override
     public String toString() {
-        if (startTime == null) {
+        if (getStartTime() == null) {
             return "\nEpic{" +
                     "name='" + getName() + '\'' +
                     ", description='" + getDescription() + '\'' +
                     ", id=" + getId() +
-                    ", epicStatus=" + getEpicStatus() +
+                    ", epicStatus=" + getStatus() +
                     ", subtasksList=" + getIdSubTasks() +
                     ", startTime=" + "n/a" +
                     ", duration=" + "n/a" +
@@ -84,11 +37,11 @@ public class Epic extends Task {
                 "name='" + getName() + '\'' +
                 ", description='" + getDescription() + '\'' +
                 ", id=" + getId() +
-                ", epicStatus=" + getEpicStatus() +
+                ", epicStatus=" + getStatus() +
                 ", subtasksList=" + getIdSubTasks() +
-                ", startTime=" + this.startTime +
-                ", duration=" + this.duration +
-                ", endTime=" + this.endTime +
+                ", startTime=" + getStartTime() +
+                ", duration=" + getDuration() +
+                ", endTime=" + getDuration() +
                 '}';
     }
 

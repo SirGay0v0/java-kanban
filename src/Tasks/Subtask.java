@@ -6,23 +6,16 @@ package Tasks;
  */
 public class Subtask extends Task {
     private final int epicOwnerId;
-    private final Status subtaskStatus;
 
-    public Subtask(String name, String description, Status subtaskStatus,
+    public Subtask(String name, String description, Status status,
                    int epicOwnerId, String startTime, String duration) {
-        super(name, description, subtaskStatus, startTime, duration);
+        super(name, description, status, startTime, duration);
         this.epicOwnerId = epicOwnerId;
-        this.subtaskStatus = subtaskStatus;
     }
 
-    public Subtask(String name, String description, Status subtaskStatus, int epicOwnerId) {
-        super(name, description);
+    public Subtask(String name, String description, Status status, int epicOwnerId) {
+        super(name, description, status);
         this.epicOwnerId = epicOwnerId;
-        this.subtaskStatus = subtaskStatus;
-    }
-
-    public Status getSubtaskStatus() {
-        return subtaskStatus;
     }
 
     public int getEpicOwnerId() {
@@ -36,7 +29,7 @@ public class Subtask extends Task {
                     "name='" + getName() + '\'' +
                     ", description='" + getDescription() + '\'' +
                     ", id=" + getId() +
-                    ", subtaskStatus=" + getSubtaskStatus() +
+                    ", subtaskStatus=" + getStatus() +
                     ", epicOwnerId=" + getEpicOwnerId() +
                     ", startTime=" + "n/a" +
                     ", duration=" + "n/a" +
@@ -47,7 +40,7 @@ public class Subtask extends Task {
                     "name='" + getName() + '\'' +
                     ", description='" + getDescription() + '\'' +
                     ", id=" + getId() +
-                    ", subtaskStatus=" + getSubtaskStatus() +
+                    ", subtaskStatus=" + getStatus() +
                     ", epicOwnerId=" + getEpicOwnerId() +
                     ", startTime=" + getStartTime() +
                     ", duration=" + getDuration() +

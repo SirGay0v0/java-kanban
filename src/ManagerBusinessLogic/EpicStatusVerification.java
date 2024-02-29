@@ -24,13 +24,13 @@ public class EpicStatusVerification {
 
         for (Integer idSubtask : listOfSubTasks) {
             Subtask subtask = (Subtask) subtaskHashMap.get(idSubtask);
-            firstSubtaskStatus = subtask.getSubtaskStatus();
+            firstSubtaskStatus = subtask.getStatus();
 
             for (Integer idsecondSubtask : listOfSubTasks) {
                 subtask = (Subtask) subtaskHashMap.get(idsecondSubtask);
 
-                if (firstSubtaskStatus != subtask.getSubtaskStatus()) {
-                    epic.setEpicStatus(Status.IN_PROGRESS);
+                if (firstSubtaskStatus != subtask.getStatus()) {
+                    epic.setStatus(Status.IN_PROGRESS);
                     break;
                 } else {
                     counterSameStatus++;
@@ -39,7 +39,7 @@ public class EpicStatusVerification {
             break;
         }
         if (counterSameStatus == listOfSubTasks.size()) {
-            epic.setEpicStatus(firstSubtaskStatus);
+            epic.setStatus(firstSubtaskStatus);
         }
     }
 }

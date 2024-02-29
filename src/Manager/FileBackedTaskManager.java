@@ -65,35 +65,37 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
      */
     public String taskToString(Task task) {
         if (task.getStartTime() == null) {
-            return task.getId() + ",TASK," + task.getName() + ","
-                    + task.getTaskStatus() + "," + task.getDescription()
+            return task.getId() + ",TASK,"
+                    + task.getName() + ","
+                    + task.getStatus() + ","
+                    + task.getDescription()
                     + ",n/a,n/a,n/a,\n";
         } else
             return task.getId() + ",TASK," + task.getName() + ","
-                    + task.getTaskStatus() + "," + task.getDescription()
+                    + task.getStatus() + "," + task.getDescription()
                     + "," + task.getStartTime() + "," + task.getDuration()
                     + "," + task.getEndTime() + ",\n";
     }
 
     public String epicToString(Epic epic) {
-        if (!epic.getIdSubTasks().isEmpty()) {
+        if (!epic.getIdSubTasks().isEmpty() && epic.getStartTime() != null) {
             return epic.getId() + ",EPIC," + epic.getName() + ","
-                    + epic.getEpicStatus() + "," + epic.getDescription()
+                    + epic.getStatus() + "," + epic.getDescription()
                     + "," + epic.getStartTime() + "," + epic.getDuration() + ","
                     + epic.getEndTime() + ",\n";
         } else return epic.getId() + ",EPIC," + epic.getName() + ","
-                + epic.getEpicStatus() + "," + epic.getDescription()
+                + epic.getStatus() + "," + epic.getDescription()
                 + ",n/a,n/a,n/a,\n";
     }
 
     public String subTaskToString(Subtask subTask) {
         if (subTask.getStartTime() == null) {
             return subTask.getId() + ",SUBTASK," + subTask.getName() + ","
-                    + subTask.getSubtaskStatus() + "," + subTask.getDescription() + ","
+                    + subTask.getStatus() + "," + subTask.getDescription() + ","
                     + subTask.getEpicOwnerId() + "," + ",n/a,n/a,n/a,\n";
         } else
             return subTask.getId() + ",SUBTASK," + subTask.getName() + ","
-                    + subTask.getSubtaskStatus() + "," + subTask.getDescription() + ","
+                    + subTask.getStatus() + "," + subTask.getDescription() + ","
                     + subTask.getEpicOwnerId() + "," + subTask.getStartTime()
                     + "," + subTask.getDuration() + "," + subTask.getEndTime() + ",\n";
     }

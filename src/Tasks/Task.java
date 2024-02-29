@@ -13,29 +13,33 @@ public class Task {
     private final String name;
     private final String description;
     private int id;
-    private Status taskStatus;
+    private Status status;
     private Duration duration;
     private LocalDateTime startTime;
 
-    public Task(String name, String description, Status taskStatus) {
+    public Task(String name, String description, Status status) {
         this.name = name;
         this.description = description;
-        this.taskStatus = taskStatus;
+        this.status = status;
     }
 
     public Task(String name, String description) {
         this.name = name;
         this.description = description;
-        taskStatus = Status.NEW;
+        status = Status.NEW;
     }
 
-    public Task(String name, String description, Status taskStatus,
+    public Task(String name, String description, Status status,
                 String startTime, String duration) {
         this.name = name;
         this.description = description;
-        this.taskStatus = taskStatus;
+        this.status = status;
         setStartTime(startTime);
         setDuration(duration);
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public void setDuration(String duration) {
@@ -55,8 +59,8 @@ public class Task {
         return startTime;
     }
 
-    public Status getTaskStatus() {
-        return taskStatus;
+    public Status getStatus() {
+        return this.status;
     }
 
     public String getName() {
@@ -79,6 +83,13 @@ public class Task {
         return startTime.plus(duration);
     }
 
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -101,7 +112,7 @@ public class Task {
                     "name='" + name + '\'' +
                     ", description='" + description + '\'' +
                     ", id=" + id +
-                    ", taskStatus=" + taskStatus +
+                    ", taskStatus=" + status +
                     ", startTime=" + "n/a" +
                     ", duration=" + "n/a" +
                     ", endTime=" + "n/a" +
@@ -110,7 +121,7 @@ public class Task {
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", id=" + id +
-                ", taskStatus=" + taskStatus +
+                ", taskStatus=" + status +
                 ", startTime=" + startTime +
                 ", duration=" + duration +
                 ", endTime=" + getEndTime() +

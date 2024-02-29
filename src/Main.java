@@ -12,18 +12,23 @@ import java.io.IOException;
  */
 public class Main {
     public static void main(String[] args) throws IOException {
-        HttpTaskServer server = new HttpTaskServer();
+               HttpTaskServer server = new HttpTaskServer();
+//        TaskManager manager= Managers.getDefault();
 //        Epic epic = new Epic("epicName", "epicDescription");
 //        Subtask subtask = new Subtask("name", "desc",
-//                Status.NEW, 0, "2000-01-01 00:00", "1440");
+//                Status.NEW, 1, "2000-01-01 00:00", "1440");
 //        Task task = new Task("0", "0", Status.NEW, "2000-01-02 00:00", "1440");
-
-
 //        GsonBuilder gsonBuilder = new GsonBuilder();
 //        gsonBuilder.setPrettyPrinting();
 //        Gson gson = gsonBuilder.create();
-//
 //        System.out.println(gson.toJson(task));
+//
+//manager.createTask(task);
+//manager.createEpic(epic);
+//manager.createSubtask(subtask);
+
+////
+
 //        System.out.println(gson.toJson(epic));
 //        System.out.println(gson.toJson(subtask));
 

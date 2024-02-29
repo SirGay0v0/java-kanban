@@ -40,7 +40,7 @@ public class HttpTaskServer {
                 .registerTypeAdapter(LocalDateTime.class, new StartTimeAdapter())
                 .create();
         server.start();
-        this.manager = Managers.getDefaultFileBucked(new File("save.scv"));
+        this.manager = Managers.getDefaultFileBucked(new File("save.csv"));
         System.out.println("server launched");
     }
 
@@ -206,13 +206,15 @@ public class HttpTaskServer {
     }
 
     private void postTaskCreate(String jsonBody, HttpExchange exchange, TaskManager manager) throws IOException {
-        JsonObject jsonObject = new JsonParser().parse(jsonBody).getAsJsonObject();
-        String name = jsonObject.get("name").getAsString();
-        String description = jsonObject.get("description").getAsString();
-        String status = jsonObject.get("status").getAsString();
-        String startTime = jsonObject.get("startTime").getAsString();
-        String duration = jsonObject.get("duration").getAsString();
-        manager.createTask(new Task(name, description, Status.valueOf(status), startTime, duration));
+//        JsonObject jsonObject = new JsonParser().parse(jsonBody).getAsJsonObject();
+//        String name = jsonObject.get("name").getAsString();
+//        String description = jsonObject.get("description").getAsString();
+//        String status = jsonObject.get("status").getAsString();
+//        String startTime = jsonObject.get("startTime").getAsString();
+//        String duration = jsonObject.get("duration").getAsString();
+//        manager.createTask(new Task(name, description, Status.valueOf(status), startTime, duration));
+        Task task = gson.fromJson(jsonBody, Task.class);
+        manager.createTask(task);
         try (OutputStream os = exchange.getResponseBody()) {
             exchange.sendResponseHeaders(200, 0);
             os.write("Task was created!".getBytes());
@@ -308,7 +310,7 @@ public class HttpTaskServer {
                 "\"description\": \"" + epic.getDescription() + "\",\n" +
                 "\"id\": " + epic.getId() + ",\n" +
                 "\"idSubtasks\": \"" + epic.getIdSubTasks() + "\",\n" +
-                "\"status\": \"" + epic.getEpicStatus() + "\",\n" +
+                "\"status\": \"" + epic.getStatus() + "\",\n" +
                 "\"startTime\": \"" + epic.getStartTime() + "\",\n" +
                 "\"duration\": \"" + epic.getDuration().toMinutes() + "\"\n" +
                 "}";
@@ -344,7 +346,7 @@ public class HttpTaskServer {
                     "\"description\": \"" + epic.getDescription() + "\",\n" +
                     "\"id\": " + epic.getId() + ",\n" +
                     "\"idSubtasks\": \"" + epic.getIdSubTasks() + "\",\n" +
-                    "\"status\": \"" + epic.getEpicStatus() + "\",\n" +
+                    "\"status\": \"" + epic.getStatus() + "\",\n" +
                     "\"startTime\": \"" + epic.getStartTime() + "\",\n" +
                     "\"duration\": \"" + epic.getDuration().toMinutes() + "\"\n" +
                     "}";

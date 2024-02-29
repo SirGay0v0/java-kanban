@@ -29,7 +29,7 @@ public class EpicTest {
         inMemoryManager.createSubtask(subtask1);
         inMemoryManager.createSubtask(subtask2);
 
-        assertEquals(Status.NEW, testEpic.getEpicStatus());
+        assertEquals(Status.NEW, testEpic.getStatus());
     }
 
     @Test
@@ -40,7 +40,7 @@ public class EpicTest {
         inMemoryManager.createSubtask(subtask1);
         inMemoryManager.createSubtask(subtask2);
 
-        assertEquals(Status.DONE, testEpic.getEpicStatus());
+        assertEquals(Status.DONE, testEpic.getStatus());
     }
 
     @Test
@@ -51,7 +51,7 @@ public class EpicTest {
         inMemoryManager.createSubtask(subtask1);
         inMemoryManager.createSubtask(subtask2);
 
-        assertEquals(Status.IN_PROGRESS, testEpic.getEpicStatus());
+        assertEquals(Status.IN_PROGRESS, testEpic.getStatus());
     }
 
     @Test
@@ -62,6 +62,6 @@ public class EpicTest {
         inMemoryManager.createSubtask(subtask1);
         inMemoryManager.createSubtask(subtask2);
 
-        assertEquals(Status.IN_PROGRESS, testEpic.getEpicStatus());
+        assertEquals(Status.IN_PROGRESS, testEpic.getStatus());
     }
 }
