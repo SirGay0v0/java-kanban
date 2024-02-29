@@ -34,22 +34,23 @@ public class Task {
         this.name = name;
         this.description = description;
         this.status = status;
-        setStartTime(startTime);
-        setDuration(duration);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        this.startTime = LocalDateTime.parse(startTime, formatter);
+        this.duration = Duration.ofMinutes(Long.parseLong(duration));
     }
 
     public void setStatus(Status status) {
         this.status = status;
     }
 
-    public void setDuration(String duration) {
-        this.duration = Duration.ofMinutes(Integer.parseInt(duration));
-    }
-
-    public void setStartTime(String startTime) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        this.startTime = LocalDateTime.parse(startTime, formatter);
-    }
+//    public void setDuration(String duration) {
+//        this.duration = Duration.ofMinutes(Integer.parseInt(duration));
+//    }
+//
+//    public void setStartTime(String startTime) {
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+//        this.startTime = LocalDateTime.parse(startTime, formatter);
+//    }
 
     public Duration getDuration() {
         return duration;

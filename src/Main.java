@@ -21,12 +21,13 @@ public class Main {
 //        GsonBuilder gsonBuilder = new GsonBuilder();
 //        gsonBuilder.setPrettyPrinting();
 //        Gson gson = gsonBuilder.create();
-//        System.out.println(gson.toJson(task));
-//
+////        System.out.println(gson.toJson(task));
+////
 //manager.createTask(task);
 //manager.createEpic(epic);
 //manager.createSubtask(subtask);
-
+//
+//        System.out.println(gson.toJson(manager.getPrioritizedTasks()));
 ////
 
 //        System.out.println(gson.toJson(epic));

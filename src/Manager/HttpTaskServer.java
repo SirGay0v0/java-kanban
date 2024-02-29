@@ -1,7 +1,6 @@
 package Manager;
 
 import Tasks.Epic;
-import Tasks.Status;
 import Tasks.Subtask;
 import Tasks.Task;
 import com.google.gson.*;
@@ -20,9 +19,6 @@ import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.TreeSet;
 
 
 public class HttpTaskServer {
@@ -179,10 +175,10 @@ public class HttpTaskServer {
                 case "epic":
                     return Endpoint.GET_EPIC;
                 case "subtask": {
-                    if (requestPath.split("/")[3].equals("epic")) {
-                        return Endpoint.GET_SUBTASKS_FROM_EPIC;
-                    } else {
+                    if (requestPath.split("/").length == 3) {
                         return Endpoint.GET_SUBTASK;
+                    } else {
+                        return Endpoint.GET_SUBTASKS_FROM_EPIC;
                     }
                 }
             }
@@ -206,15 +202,7 @@ public class HttpTaskServer {
     }
 
     private void postTaskCreate(String jsonBody, HttpExchange exchange, TaskManager manager) throws IOException {
-//        JsonObject jsonObject = new JsonParser().parse(jsonBody).getAsJsonObject();
-//        String name = jsonObject.get("name").getAsString();
-//        String description = jsonObject.get("description").getAsString();
-//        String status = jsonObject.get("status").getAsString();
-//        String startTime = jsonObject.get("startTime").getAsString();
-//        String duration = jsonObject.get("duration").getAsString();
-//        manager.createTask(new Task(name, description, Status.valueOf(status), startTime, duration));
-        Task task = gson.fromJson(jsonBody, Task.class);
-        manager.createTask(task);
+        manager.createTask(gson.fromJson(jsonBody, Task.class));
         try (OutputStream os = exchange.getResponseBody()) {
             exchange.sendResponseHeaders(200, 0);
             os.write("Task was created!".getBytes());
@@ -222,12 +210,7 @@ public class HttpTaskServer {
     }
 
     private void postEpicCreate(String jsonBody, HttpExchange exchange, TaskManager manager) throws IOException {
-        JsonObject jsonObject = new JsonParser().parse(jsonBody).getAsJsonObject();
-        String name = jsonObject.get("name").getAsString();
-        String description = jsonObject.get("description").getAsString();
-
-        Epic epic = new Epic(name, description);
-        manager.createEpic(epic);
+        manager.createEpic(gson.fromJson(jsonBody, Epic.class));
         try (OutputStream os = exchange.getResponseBody()) {
             exchange.sendResponseHeaders(200, 0);
             os.write("Epic was created!".getBytes());
@@ -235,14 +218,7 @@ public class HttpTaskServer {
     }
 
     private void postSubtaskCreate(String jsonBody, HttpExchange exchange, TaskManager manager) throws IOException {
-        JsonObject jsonObject = new JsonParser().parse(jsonBody).getAsJsonObject();
-        String name = jsonObject.get("name").getAsString();
-        String description = jsonObject.get("description").getAsString();
-        int epicOwnerId = jsonObject.get("epicOwnerId").getAsInt();
-        String status = jsonObject.get("status").getAsString();
-        String startTime = jsonObject.get("startTime").getAsString();
-        String duration = jsonObject.get("duration").getAsString();
-        manager.createSubtask(new Subtask(name, description, Status.valueOf(status), epicOwnerId, startTime, duration));
+        manager.createSubtask(gson.fromJson(jsonBody, Subtask.class));
         try (OutputStream os = exchange.getResponseBody()) {
             exchange.sendResponseHeaders(200, 0);
             os.write("Subtask was created!".getBytes());
@@ -250,14 +226,8 @@ public class HttpTaskServer {
     }
 
     private void postTaskUpdateById(String jsonBody, HttpExchange exchange, TaskManager manager) throws IOException {
-        JsonObject jsonObject = new JsonParser().parse(jsonBody).getAsJsonObject();
-        String name = jsonObject.get("name").getAsString();
-        String description = jsonObject.get("description").getAsString();
-        String status = jsonObject.get("taskStatus").getAsString();
-        String startTime = jsonObject.get("startTime").getAsString();
-        String duration = jsonObject.get("duration").getAsString();
         int id = Integer.parseInt(exchange.getRequestURI().getQuery().split("=")[1]);
-        manager.updateTask(new Task(name, description, Status.valueOf(status), startTime, duration), id);
+        manager.updateTask(gson.fromJson(jsonBody, Task.class), id);
         try (OutputStream os = exchange.getResponseBody()) {
             exchange.sendResponseHeaders(200, 0);
             os.write(("Task " + id + " was updated!").getBytes());
@@ -265,27 +235,17 @@ public class HttpTaskServer {
     }
 
     private void postEpicUpdateById(String jsonBody, HttpExchange exchange, TaskManager manager) throws IOException {
-        JsonObject jsonObject = new JsonParser().parse(jsonBody).getAsJsonObject();
-        String name = jsonObject.get("name").getAsString();
-        String description = jsonObject.get("description").getAsString();
         int id = Integer.parseInt(exchange.getRequestURI().getQuery().split("=")[1]);
-        manager.updateEpic(new Epic(name, description), id);
+        manager.updateEpic(gson.fromJson(jsonBody, Epic.class), id);
         try (OutputStream os = exchange.getResponseBody()) {
             exchange.sendResponseHeaders(200, 0);
             os.write(("Task " + id + " was updated!").getBytes());
         }
     }
 
-    private void postSubtaskUpdateById(String jsonBody, HttpExchange exchange, TaskManager manager) throws
-            IOException {
-        JsonObject jsonObject = new JsonParser().parse(jsonBody).getAsJsonObject();
-        String name = jsonObject.get("name").getAsString();
-        String description = jsonObject.get("description").getAsString();
-        String status = jsonObject.get("subtaskStatus").getAsString();
-        String startTime = jsonObject.get("startTime").getAsString();
-        String duration = jsonObject.get("duration").getAsString();
+    private void postSubtaskUpdateById(String jsonBody, HttpExchange exchange, TaskManager manager) throws IOException {
         int id = Integer.parseInt(exchange.getRequestURI().getQuery().split("=")[1]);
-        manager.updateTask(new Subtask(name, description, Status.valueOf(status), id, startTime, duration), id);
+        manager.updateTask(gson.fromJson(jsonBody, Subtask.class), id);
         try (OutputStream os = exchange.getResponseBody()) {
             exchange.sendResponseHeaders(200, 0);
             os.write(("Task " + id + " was updated!").getBytes());
@@ -304,30 +264,17 @@ public class HttpTaskServer {
 
     private void getEpicById(HttpExchange exchange, TaskManager manager) throws IOException {
         int id = Integer.parseInt(exchange.getRequestURI().getQuery().split("=")[1]);
-        Epic epic = manager.getEpicById(id);
-        String epicString = "{\n" +
-                "\"name\": \"" + epic.getName() + "\",\n" +
-                "\"description\": \"" + epic.getDescription() + "\",\n" +
-                "\"id\": " + epic.getId() + ",\n" +
-                "\"idSubtasks\": \"" + epic.getIdSubTasks() + "\",\n" +
-                "\"status\": \"" + epic.getStatus() + "\",\n" +
-                "\"startTime\": \"" + epic.getStartTime() + "\",\n" +
-                "\"duration\": \"" + epic.getDuration().toMinutes() + "\"\n" +
-                "}";
-        JsonElement jsonElement = JsonParser.parseString(epicString);
         try (OutputStream os = exchange.getResponseBody()) {
             exchange.sendResponseHeaders(200, 0);
-            os.write(gson.toJson(jsonElement).getBytes());
+            os.write(gson.toJson(manager.getEpicById(id)).getBytes());
         }
     }
 
     private void getSubtaskById(HttpExchange exchange, TaskManager manager) throws IOException {
         int id = Integer.parseInt(exchange.getRequestURI().getQuery().split("=")[1]);
-        Subtask subtask = manager.getSubtaskById(id);
-
         try (OutputStream os = exchange.getResponseBody()) {
             exchange.sendResponseHeaders(200, 0);
-            os.write(gson.toJson(subtask).getBytes(StandardCharsets.UTF_8));
+            os.write(gson.toJson(manager.getSubtaskById(id)).getBytes(StandardCharsets.UTF_8));
         }
     }
 
@@ -339,24 +286,9 @@ public class HttpTaskServer {
     }
 
     private void getEpics(HttpExchange exchange, TaskManager manager) throws IOException {
-        Collection<JsonElement> jeList = new ArrayList<>();
-        for (Epic epic : (Collection<Epic>) manager.getEpics()) {
-            String epicString = "{\n" +
-                    "\"name\": \"" + epic.getName() + "\",\n" +
-                    "\"description\": \"" + epic.getDescription() + "\",\n" +
-                    "\"id\": " + epic.getId() + ",\n" +
-                    "\"idSubtasks\": \"" + epic.getIdSubTasks() + "\",\n" +
-                    "\"status\": \"" + epic.getStatus() + "\",\n" +
-                    "\"startTime\": \"" + epic.getStartTime() + "\",\n" +
-                    "\"duration\": \"" + epic.getDuration().toMinutes() + "\"\n" +
-                    "}";
-            JsonElement jsonElement = JsonParser.parseString(epicString);
-            jeList.add(jsonElement);
-        }
-
         try (OutputStream os = exchange.getResponseBody()) {
             exchange.sendResponseHeaders(200, 0);
-            os.write(gson.toJson(jeList).getBytes(StandardCharsets.UTF_8));
+            os.write(gson.toJson(manager.getEpics()).getBytes(StandardCharsets.UTF_8));
         }
     }
 
@@ -369,19 +301,13 @@ public class HttpTaskServer {
 
     private void getSubtasksFromEpic(HttpExchange exchange, TaskManager taskManager) throws IOException {
         int id = Integer.parseInt(exchange.getRequestURI().getQuery().split("=")[1]);
-        Collection<Integer> subtasksListId = manager.getAllSubtasksFromEpic(id);
-        Collection<Subtask> subtasksList = new ArrayList<>();
-        for (Integer idSubtask : subtasksListId) {
-            subtasksList.add(manager.getSubtaskById(idSubtask));
-        }
         try (OutputStream os = exchange.getResponseBody()) {
             exchange.sendResponseHeaders(200, 0);
-            os.write(gson.toJson(subtasksList).getBytes(StandardCharsets.UTF_8));
+            os.write(gson.toJson(manager.getAllSubtasksFromEpic(id)).getBytes(StandardCharsets.UTF_8));
         }
     }
 
     private void getPriorityTasks(HttpExchange exchange, TaskManager manager) throws IOException {
-
         try (OutputStream os = exchange.getResponseBody()) {
             exchange.sendResponseHeaders(200, 0);
             os.write(gson.toJson(manager.getPrioritizedTasks()).getBytes(StandardCharsets.UTF_8));
@@ -464,16 +390,18 @@ public class HttpTaskServer {
     }
 
     static class StartTimeAdapter extends TypeAdapter<LocalDateTime> {
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
         @Override
         public void write(JsonWriter jsonWriter, LocalDateTime localDate) throws IOException {
-            final DateTimeFormatter formatterWriter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            jsonWriter.value(localDate.format(formatterWriter));
+            if (localDate != null) {
+                jsonWriter.value(localDate.format(formatter));
+            } else jsonWriter.value((String) null);
         }
 
         @Override
         public LocalDateTime read(JsonReader jsonReader) throws IOException {
-            return null;
+            return LocalDateTime.parse(jsonReader.nextString(), formatter);
         }
     }
 
@@ -481,12 +409,15 @@ public class HttpTaskServer {
 
         @Override
         public void write(JsonWriter jsonWriter, Duration duration) throws IOException {
-            jsonWriter.value(String.valueOf(duration.toMinutes()));
+            if (duration != null) {
+                jsonWriter.value(String.valueOf(duration.toMinutes()));
+            } else jsonWriter.value((String) null);
+
         }
 
         @Override
         public Duration read(JsonReader jsonReader) throws IOException {
-            return null;
+            return Duration.ofMinutes(Long.parseLong(jsonReader.nextString()));
         }
     }
 }
