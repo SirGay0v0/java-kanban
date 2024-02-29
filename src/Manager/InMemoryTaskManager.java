@@ -34,7 +34,7 @@ public class InMemoryTaskManager implements TaskManager {
     protected TreeSet<Task> priorityTree;
 
 
-    public InMemoryTaskManager(HistoryManager inMemoryHistoryManager) {
+    public InMemoryTaskManager() {
         taskHashMap = new HashMap<>();
         epicHashMap = new HashMap<>();
         subtaskHashMap = new HashMap<>();
@@ -42,7 +42,7 @@ public class InMemoryTaskManager implements TaskManager {
         listOfTasks.add(0, (HashMap<Integer, Task>) taskHashMap);
         listOfTasks.add(1, (HashMap<Integer, Epic>) epicHashMap);
         listOfTasks.add(2, (HashMap<Integer, Subtask>) subtaskHashMap);
-        this.inMemoryHistoryManager = inMemoryHistoryManager;
+        this.inMemoryHistoryManager = new InMemoryHistoryManager();
         priorityTree = new TreeSet<>(new Comparator<>() {
             @Override
             public int compare(Task o1, Task o2) {

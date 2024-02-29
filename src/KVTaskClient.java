@@ -24,7 +24,7 @@ public class KVTaskClient {
         API_TOKEN = response.body();
     }
 
-    private void put(String key, String json) throws IOException {
+    public void put(String key, String json) throws IOException {
         url = URI.create("http://localhost:8078/save/" + key + "?API_TOKEN=" + API_TOKEN);
 
         request = HttpRequest.newBuilder()
@@ -33,7 +33,7 @@ public class KVTaskClient {
                 .build();
     }
 
-    private String load(String key) throws IOException, InterruptedException {
+    public String load(String key) throws IOException, InterruptedException {
         url = URI.create("http://localhost:8078/load/" + key + "?API_TOKEN=" + API_TOKEN);
         request = HttpRequest.newBuilder()
                 .uri(url)

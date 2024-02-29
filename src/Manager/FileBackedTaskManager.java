@@ -22,8 +22,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
      * При инициализации запускает метод loadFromFile, который подгружает из файла актуальное
      * состояние InMemoryHistoryManager, а также заполняет пустые hashMap.
      */
-    public FileBackedTaskManager(HistoryManager inMemoryHistoryManager, File file) {
-        super(inMemoryHistoryManager);
+    public FileBackedTaskManager(File file) {
         this.file = file;
         if (file.exists()) {
             loadFromFile(file);
