@@ -3,6 +3,7 @@
 import Manager.Managers;
 import Manager.TaskManager;
 import Tasks.Epic;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -13,6 +14,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class FileBackedTaskManagerTest extends TaskManagerTest {
+
+    @AfterEach
+    public void afterEach() {
+        File file = new File("save.csv");
+        if (file.exists()) {
+            file.delete();
+        }
+    }
 
     @Test
     public void getTasks() {

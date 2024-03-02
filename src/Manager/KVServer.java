@@ -117,4 +117,8 @@ public class KVServer {
             h.getResponseBody().write(resp);
         }
     }
+
+    public void stop(){
+        server.stop(0);
+    }
 }
