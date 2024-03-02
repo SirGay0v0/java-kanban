@@ -1,3 +1,5 @@
+package Manager;
+
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import java.io.IOException;
@@ -31,7 +33,7 @@ public class KVServer {
             if (h.getRequestMethod().equals("GET")) {
                 String key = h.getRequestURI().getPath().split("/")[2];
                 sendText(h, data.get(key));
-            }else {
+            } else {
                 System.out.println("/register ждёт GET-запрос, а получил " + h.getRequestMethod());
                 h.sendResponseHeaders(405, 0);
             }
@@ -108,9 +110,11 @@ public class KVServer {
     }
 
     protected void sendText(HttpExchange h, String text) throws IOException {
-        byte[] resp = text.getBytes(UTF_8);
-        h.getResponseHeaders().add("Content-Type", "application/json");
-        h.sendResponseHeaders(200, resp.length);
-        h.getResponseBody().write(resp);
+        if (text != null) {
+            byte[] resp = text.getBytes(UTF_8);
+            h.getResponseHeaders().add("Content-Type", "application/json");
+            h.sendResponseHeaders(200, resp.length);
+            h.getResponseBody().write(resp);
+        }
     }
 }

@@ -11,7 +11,34 @@ import java.io.IOException;
  * Все условия проверки, которые были указаны в ТЗ прошли без ошибок.
  */
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
+
+        KVServer server = new KVServer();
+        server.start();
+
+
+        TaskManager manager = Managers.getDefault();
+//
+//
+        Task task = new Task("name", "desc", Status.NEW, "2020-01-01 00:00", "1440");
+        manager.createTask(task);
+        TaskManager managerLoad = Managers.getDefault();
+
+        System.out.println((managerLoad.getTasks()));
+        System.out.println();
+        System.out.println((manager.getTasks()));
+
+//        Epic epic = new Epic("name", "desc");
+//        manager.createEpic(epic);
+//
+//        Subtask subtask = new Subtask("name", "desc", Status.IN_PROGRESS, 1);
+//        manager.createSubtask(subtask);
+//
+//        subtask = new Subtask("name", "desc", Status.NEW, 1, "2000-01-01 00:00", "1440");
+//        manager.createSubtask(subtask);
+//
+//        subtask = new Subtask("name", "desc", Status.DONE, 1, "2002-01-01 00:00", "1440");
+//        manager.createSubtask(subtask);
 
 
 
@@ -125,8 +152,6 @@ public class Main {
 //        System.out.println(fileBuckedTaskManager.getHistory());
         //Проверка на удаление Epic и зависимых от него SubTask прошла успешно
         //Проверка на удаление одного SubTask из нескольких прошла успешно
-
-
         /*task = new Task("First task", "To do smth", Status.NEW);
         inMemoryTaskManager.createTask(task);
         task = new Task("Second task", "Smth is Done", Status.NEW);

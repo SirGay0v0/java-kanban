@@ -1,8 +1,9 @@
-package tests;
+
 
 import org.junit.jupiter.api.Test;
 
 public class InMemoryTaskManagerTest extends TaskManagerTest {
+
 
     @Test
     public void getTasks() {

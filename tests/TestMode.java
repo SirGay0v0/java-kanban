@@ -1,4 +1,3 @@
-package tests;
 
 public enum TestMode {
     INMEMORYMODE,

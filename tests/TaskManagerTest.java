@@ -1,7 +1,8 @@
-package tests;
 
 
-import Manager.Managers;
+
+import Manager.FileBackedTaskManager;
+import Manager.InMemoryTaskManager;
 import Manager.TaskManager;
 import Tasks.Epic;
 import Tasks.Status;
@@ -16,14 +17,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class TaskManagerTest<T extends TaskManager> {
     TaskManager taskManager;
+    private TestMode mode;
 
     public void generateRightManager(TestMode mode) {
-        if (mode==TestMode.FILEBACKEDMODE) {
+        if (mode== TestMode.FILEBACKEDMODE) {
             File file = new File("save.csv");
             clearFile(file);
-            taskManager = Managers.getDefaultFileBucked(file);
+            taskManager = new FileBackedTaskManager(file);
         } else {
-            taskManager = Managers.getDefault();
+            taskManager = new InMemoryTaskManager();
         }
     }
 
@@ -117,6 +119,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
     }
 
     public void createEpic(TestMode mode) {
+        this.mode = mode;
         generateRightManager(mode);
         Epic epic = new Epic("t", "t");
         taskManager.createEpic(epic);

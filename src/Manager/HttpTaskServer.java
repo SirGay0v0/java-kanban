@@ -388,36 +388,4 @@ public class HttpTaskServer {
         DELETE_SUBTASKS,
         UNKNOWN
     }
-
-    static class StartTimeAdapter extends TypeAdapter<LocalDateTime> {
-        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-
-        @Override
-        public void write(JsonWriter jsonWriter, LocalDateTime localDate) throws IOException {
-            if (localDate != null) {
-                jsonWriter.value(localDate.format(formatter));
-            } else jsonWriter.value((String) null);
-        }
-
-        @Override
-        public LocalDateTime read(JsonReader jsonReader) throws IOException {
-            return LocalDateTime.parse(jsonReader.nextString(), formatter);
-        }
-    }
-
-    static class DurationAdapter extends TypeAdapter<Duration> {
-
-        @Override
-        public void write(JsonWriter jsonWriter, Duration duration) throws IOException {
-            if (duration != null) {
-                jsonWriter.value(String.valueOf(duration.toMinutes()));
-            } else jsonWriter.value((String) null);
-
-        }
-
-        @Override
-        public Duration read(JsonReader jsonReader) throws IOException {
-            return Duration.ofMinutes(Long.parseLong(jsonReader.nextString()));
-        }
-    }
 }

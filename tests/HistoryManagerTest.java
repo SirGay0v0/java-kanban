@@ -1,5 +1,5 @@
-package tests;
 
+import Manager.InMemoryTaskManager;
 import Manager.Managers;
 import Manager.TaskManager;
 import Tasks.Epic;
@@ -14,7 +14,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class HistoryManagerTest {
-    TaskManager taskManager = Managers.getDefault();
+    TaskManager taskManager = new InMemoryTaskManager();
 
     @Test
     public void addtToEmptyHistoryList() {

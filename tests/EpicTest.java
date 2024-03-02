@@ -1,6 +1,4 @@
-package tests;
-
-import Manager.Managers;
+import Manager.InMemoryTaskManager;
 import Manager.TaskManager;
 import Tasks.Epic;
 import Tasks.Status;
@@ -16,7 +14,7 @@ public class EpicTest {
 
     @BeforeEach
     public void beforeEach() {
-        inMemoryManager = Managers.getDefault();
+        inMemoryManager = new InMemoryTaskManager();
         testEpic = new Epic("test epic", "some description");
         inMemoryManager.createEpic(testEpic);
     }

@@ -1,7 +1,7 @@
+package Manager;
+
 import java.io.*;
-import java.net.HttpURLConnection;
 import java.net.URI;
-import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -14,23 +14,22 @@ public class KVTaskClient {
     URI url;
 
     public KVTaskClient(URI url) throws InterruptedException, IOException {
-        KVServer server = new KVServer();
-        server.start();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(url)
+                .uri(URI.create(url + "/register"))
                 .GET()
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         API_TOKEN = response.body();
     }
 
-    public void put(String key, String json) throws IOException {
+    public void put(String key, String json) throws IOException, InterruptedException {
         url = URI.create("http://localhost:8078/save/" + key + "?API_TOKEN=" + API_TOKEN);
 
         request = HttpRequest.newBuilder()
                 .uri(url)
                 .POST(HttpRequest.BodyPublishers.ofByteArray(json.getBytes()))
                 .build();
+        client.send(request, HttpResponse.BodyHandlers.ofString());
     }
 
     public String load(String key) throws IOException, InterruptedException {
@@ -39,7 +38,11 @@ public class KVTaskClient {
                 .uri(url)
                 .GET()
                 .build();
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        return response.body();
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            return response.body();
+        } catch (IOException ignore) {
+        }
+        return "";
     }
 }
