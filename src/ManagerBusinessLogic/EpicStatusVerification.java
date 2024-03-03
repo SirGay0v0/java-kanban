@@ -16,18 +16,18 @@ import java.util.Map;
  */
 public class EpicStatusVerification {
 
-    public void verifyStatus(Epic epic, Map subtaskHashMap) {
+    public void verifyStatus(Epic epic, Map<Integer,Subtask> subtaskHashMap) {
 
         Collection<Integer> listOfSubTasks = epic.getIdSubTasks();
         int counterSameStatus = 0;
         Status firstSubtaskStatus = null;
 
         for (Integer idSubtask : listOfSubTasks) {
-            Subtask subtask = (Subtask) subtaskHashMap.get(idSubtask);
+            Subtask subtask = subtaskHashMap.get(idSubtask);
             firstSubtaskStatus = subtask.getStatus();
 
             for (Integer idsecondSubtask : listOfSubTasks) {
-                subtask = (Subtask) subtaskHashMap.get(idsecondSubtask);
+                subtask = subtaskHashMap.get(idsecondSubtask);
 
                 if (firstSubtaskStatus != subtask.getStatus()) {
                     epic.setStatus(Status.IN_PROGRESS);

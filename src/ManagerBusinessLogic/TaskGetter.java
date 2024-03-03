@@ -1,6 +1,7 @@
 package ManagerBusinessLogic;
 
 import Tasks.Epic;
+import Tasks.Subtask;
 import Tasks.Task;
 
 import java.util.*;
@@ -11,20 +12,22 @@ import java.util.*;
  * Третий метод возвращает объект по его id;
  */
 public class TaskGetter {
-    public Collection<Task> getAllTasks(List<HashMap<String, ? extends Task>> listOfTasks, int option) {
-        Collection<Task> listOfFoundTasks = new ArrayList<>();
-
-        listOfFoundTasks.addAll(listOfTasks.get(option).values());
-        return listOfFoundTasks;
+    public Collection<Task> getAllTasks(Map<Integer, Task> taskHashMap) {
+        return new ArrayList<>(taskHashMap.values());
+    }
+    public Collection<Epic> getAllEpics(Map<Integer, Epic> epicHashMap) {
+        return new ArrayList<>(epicHashMap.values());
+    }
+    public Collection<Subtask> getAllSubtasks(Map<Integer, Subtask> subtaskHashMap) {
+        return new ArrayList<>(subtaskHashMap.values());
     }
 
-    public Collection getListOfSubtasks(Map subtaskHashMap, int id) {
-        Epic epic = (Epic) subtaskHashMap.get(id);
-        Collection getList = epic.getIdSubTasks();
-        return getList;
+    public Collection<Integer> getListOfSubtasks(Map<Integer, Epic> epicHashMap, int id) {
+        Epic epic = epicHashMap.get(id);
+        return epic.getIdSubTasks();
     }
 
-    public Object getById(ArrayList<HashMap> listOfTasks, int id, int option) {
+    public Task getById(List<HashMap<Integer, ? extends Task>> listOfTasks, int id, int option) {
         return listOfTasks.get(option).get(id);
     }
 }

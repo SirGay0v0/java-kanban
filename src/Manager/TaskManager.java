@@ -15,11 +15,11 @@ import java.util.Collection;
 
 public interface TaskManager {
 
-    Collection getTasks();
+    Collection<Task> getTasks();
 
-    Collection getEpics();
+    Collection<Epic> getEpics();
 
-    Collection getSubtasks();
+    Collection<Subtask> getSubtasks();
 
     void createTask(Task task);
 

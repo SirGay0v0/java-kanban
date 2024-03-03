@@ -1,7 +1,7 @@
 package Exceptions;
 
 public class ManagerLoadException extends RuntimeException {
-    public void ManagerSaveException(){
+    public ManagerLoadException() {
         System.out.println("Произошла ошибка загрузки из файла.");
     }
 }

@@ -16,11 +16,4 @@ public class Managers {
     public static TaskManager getDefaultFileBucked(File file) {
         return new FileBackedTaskManager(file);
     }
-
-    public static HistoryManager getDefaultHistory() {
-        HistoryManager inMemoryHistoryManager = new InMemoryHistoryManager();
-        return inMemoryHistoryManager;
-    }
-
-
 }

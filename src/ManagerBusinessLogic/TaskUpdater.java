@@ -4,8 +4,9 @@ import Tasks.Epic;
 import Tasks.Subtask;
 import Tasks.Task;
 
-import java.util.ArrayList;
+
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Класс обновляет существующей экземпляр по его id.
@@ -14,7 +15,7 @@ import java.util.HashMap;
  */
 public class TaskUpdater {
 
-    public void updateById(Task task, int idTask, ArrayList<HashMap> listOfTasks, int option) {
+    public void updateById(Task task, int idTask, List<HashMap> listOfTasks, int option) {
 
         if (listOfTasks.get(option).containsKey(idTask)) {
 

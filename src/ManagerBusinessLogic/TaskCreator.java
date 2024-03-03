@@ -4,8 +4,8 @@ import Tasks.Epic;
 import Tasks.Subtask;
 import Tasks.Task;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,19 +14,24 @@ import java.util.Map;
  * для присвоения корректного статуса экземпляру класса Epic.
  */
 public class TaskCreator {
-    public void createTask(Map taskHashMap, Task task, int id) {
-        if (!taskHashMap.containsValue(task)) {
+    public void createTask(Map<Integer, Task> taskMap, Task task, int id) {
+        if (!taskMap.containsValue(task)) {
             task.setId(id);
-            taskHashMap.put(id, task);
+            taskMap.put(id, task);
         }
     }
 
-    public void createSubtask(ArrayList<HashMap> listOfTasks, Subtask subtask, int id) {
+    public void createEpic(Map<Integer, Epic> epicMap, Epic epic, int id) {
+        epic.setId(id);
+        epicMap.put(id, epic);
+    }
+
+    public void createSubtask(List<HashMap<Integer, ? extends Task>> listOfTasks, Subtask subtask, int id) {
         EpicStatusVerification epicStatusVerification = new EpicStatusVerification();
         EpicTimeVerification epicTimeVerification = new EpicTimeVerification();
-        HashMap subtaskHashMap = listOfTasks.get(2);
-        HashMap epicHashMap = listOfTasks.get(1);
-        Epic epic = (Epic) epicHashMap.get(subtask.getEpicOwnerId());
+        HashMap<Integer, Subtask> subtaskHashMap = (HashMap<Integer, Subtask>) listOfTasks.get(2);
+        HashMap<Integer, Epic> epicHashMap = (HashMap<Integer, Epic>) listOfTasks.get(1);
+        Epic epic = epicHashMap.get(subtask.getEpicOwnerId());
 
         subtask.setId(id);
         subtaskHashMap.put(id, subtask);

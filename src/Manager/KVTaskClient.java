@@ -8,10 +8,10 @@ import java.net.http.HttpResponse;
 
 
 public class KVTaskClient {
-    String API_TOKEN;
-    HttpClient client = HttpClient.newHttpClient();
-    HttpRequest request;
-    URI url;
+    private final String API_TOKEN;
+    private final HttpClient client = HttpClient.newHttpClient();
+    private HttpRequest request;
+    private URI url;
 
     public KVTaskClient(URI url) throws InterruptedException, IOException {
         HttpRequest request = HttpRequest.newBuilder()
@@ -32,7 +32,7 @@ public class KVTaskClient {
         client.send(request, HttpResponse.BodyHandlers.ofString());
     }
 
-    public String load(String key) throws IOException, InterruptedException {
+    public String load(String key) throws InterruptedException {
         url = URI.create("http://localhost:8078/load/" + key + "?API_TOKEN=" + API_TOKEN);
         request = HttpRequest.newBuilder()
                 .uri(url)

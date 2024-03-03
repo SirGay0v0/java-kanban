@@ -1,5 +1,6 @@
 package Manager;
 
+import Exceptions.ManagerLoadException;
 import Exceptions.ManagerSaveException;
 import ManagerBusinessLogic.EpicStatusVerification;
 import ManagerBusinessLogic.EpicTimeVerification;
@@ -54,7 +55,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             bufferedWriter.write(historyToString(inMemoryHistoryManager));
 
         } catch (IOException ex) {
-            new ManagerSaveException();
+            throw new ManagerSaveException();
         }
     }
 
@@ -109,7 +110,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         if (collection != null) {
             StringBuilder stringBuilder = new StringBuilder();
             for (Task task : collection) {
-                stringBuilder.append(task.getId() + ",");
+                stringBuilder
+                        .append(task.getId())
+                        .append(",");
             }
             stringBuilder.deleteCharAt(stringBuilder.length() - 1);
             return String.valueOf(stringBuilder);
@@ -131,7 +134,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             int maxId = -1;
             while (buffReader.ready()) {
                 String stringLine = buffReader.readLine();
-                if (!stringLine.isEmpty() && stringLine.endsWith(",")) {
+                if (stringLine.endsWith(",")) {
                     taskParts = stringLine.split(",");
                     int id = Integer.parseInt(taskParts[0]);
                     String type = taskParts[1];
@@ -176,11 +179,11 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 id = maxId + 1;
             }
         } catch (IOException ex) {
-            throw new ManagerSaveException();
+            throw new ManagerLoadException();
         }
-        taskHashMap.values().stream().map(task -> priorityTree.add(task)).findFirst();
-        subtaskHashMap.values().stream().map(subtask -> priorityTree.add(subtask)).findFirst();
-        epicHashMap.values().stream().map(epic -> priorityTree.add(epic)).findFirst();
+        taskHashMap.values().stream().map(priorityTree::add);
+        subtaskHashMap.values().stream().map(priorityTree::add);
+//        epicHashMap.values().stream().map(priorityTree::add);
     }
 
     /**
@@ -313,22 +316,22 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     @Override
-    public Collection getTasks() {
-        Collection collection = super.getTasks();
+    public Collection<Task> getTasks() {
+        Collection<Task> collection = super.getTasks();
         save();
         return collection;
     }
 
     @Override
-    public Collection getEpics() {
-        Collection collection = super.getEpics();
+    public Collection<Epic> getEpics() {
+        Collection<Epic> collection = super.getEpics();
         save();
         return collection;
     }
 
     @Override
-    public Collection getSubtasks() {
-        Collection collection = super.getSubtasks();
+    public Collection<Subtask> getSubtasks() {
+        Collection<Subtask> collection = super.getSubtasks();
         save();
         return collection;
     }

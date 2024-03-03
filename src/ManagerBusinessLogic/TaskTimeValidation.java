@@ -12,7 +12,7 @@ public class TaskTimeValidation {
         if (task.getStartTime() != null) {
             LocalDateTime taskStartTime = task.getStartTime();
             LocalDateTime taskEndTime = task.getEndTime();
-            List correctionList1 = tasksTreeSet.stream()
+            List<? extends Task> correctionList1 = tasksTreeSet.stream()
                     .filter(taskFromTaskSet ->
                             (       (taskFromTaskSet.getStartTime() == null)
                                     ||

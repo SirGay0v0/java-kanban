@@ -20,11 +20,11 @@ import java.util.*;
  * остальные HashMap.
  */
 public class InMemoryTaskManager implements TaskManager {
-    protected List<HashMap> listOfTasks;
-    protected Map<Integer, Task> taskHashMap;
-    protected Map<Integer, Epic> epicHashMap;
-    protected Map<Integer, Subtask> subtaskHashMap;
-    protected final HistoryManager inMemoryHistoryManager;
+    protected List<HashMap<Integer, ? extends Task>> listOfTasks = new ArrayList<>();
+    protected Map<Integer, Task> taskHashMap = new HashMap<>();
+    protected Map<Integer, Epic> epicHashMap = new HashMap<>();
+    protected Map<Integer, Subtask> subtaskHashMap = new HashMap<>();
+    protected final HistoryManager inMemoryHistoryManager= new InMemoryHistoryManager();
     private final TaskGetter taskGetter = new TaskGetter();
     private final TaskCreator taskCreator = new TaskCreator();
     private final TaskDeleter taskDeleter = new TaskDeleter();
@@ -35,30 +35,22 @@ public class InMemoryTaskManager implements TaskManager {
 
 
     public InMemoryTaskManager() {
-        taskHashMap = new HashMap<>();
-        epicHashMap = new HashMap<>();
-        subtaskHashMap = new HashMap<>();
-        listOfTasks = new ArrayList<>();
         listOfTasks.add(0, (HashMap<Integer, Task>) taskHashMap);
         listOfTasks.add(1, (HashMap<Integer, Epic>) epicHashMap);
         listOfTasks.add(2, (HashMap<Integer, Subtask>) subtaskHashMap);
-        this.inMemoryHistoryManager = new InMemoryHistoryManager();
-        priorityTree = new TreeSet<>(new Comparator<>() {
-            @Override
-            public int compare(Task o1, Task o2) {
-                if (o1.getStartTime() != null && o2.getStartTime() != null) {
-                    if (o1.getStartTime().isAfter(o2.getStartTime())) {
-                        return 1;
-                    } else if (o1.getStartTime() == (o2.getStartTime())) {
-                        return -1;
-                    }
-                } else if (o1.getStartTime() == null && o2.getStartTime() != null) {
+        priorityTree = new TreeSet<>((Task o1, Task o2) -> {
+            if (o1.getStartTime() != null && o2.getStartTime() != null) {
+                if (o1.getStartTime().isAfter(o2.getStartTime())) {
                     return 1;
-                } else if (o1.getStartTime() != null && o2.getStartTime() == null) {
+                } else if (o1.getStartTime() == (o2.getStartTime())) {
                     return -1;
                 }
+            } else if (o1.getStartTime() == null && o2.getStartTime() != null) {
+                return 1;
+            } else if (o1.getStartTime() != null && o2.getStartTime() == null) {
                 return -1;
             }
+            return -1;
         });
     }
 
@@ -75,7 +67,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void createEpic(Epic epic) {
-        taskCreator.createTask(epicHashMap, epic, id);
+        taskCreator.createEpic(epicHashMap, epic, id);
         id++;
     }
 
@@ -83,7 +75,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void createSubtask(Subtask subtask) {
         Collection<? extends Task> set = getPrioritizedTasks();
         if (timeValidation.validate(subtask, set) != null) {
-            taskCreator.createSubtask((ArrayList<HashMap>) listOfTasks, subtask, id);
+            taskCreator.createSubtask(listOfTasks, subtask, id);
             id++;
             priorityTree.add(subtask);
         } else System.out.println("Задача не была создана, ввиду пересечения по времени" +
@@ -91,18 +83,18 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Collection getTasks() {
-        return taskGetter.getAllTasks((ArrayList) listOfTasks, 0);
+    public Collection<Task> getTasks() {
+        return taskGetter.getAllTasks(taskHashMap);
     }
 
     @Override
-    public Collection getEpics() {
-        return taskGetter.getAllTasks((ArrayList) listOfTasks, 1);
+    public Collection<Epic> getEpics() {
+        return taskGetter.getAllEpics(epicHashMap);
     }
 
     @Override
-    public Collection getSubtasks() {
-        return taskGetter.getAllTasks((ArrayList) listOfTasks, 2);
+    public Collection<Subtask> getSubtasks() {
+        return taskGetter.getAllSubtasks( subtaskHashMap);
     }
 
 
@@ -123,38 +115,38 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Task getTaskById(int id) {
-        Task task = (Task) taskGetter.getById((ArrayList<HashMap>) listOfTasks, id, 0);
+        Task task = taskGetter.getById(listOfTasks, id, 0);
         inMemoryHistoryManager.add(task);
         return task;
     }
 
     @Override
     public Epic getEpicById(int id) {
-        Epic epic = (Epic) taskGetter.getById((ArrayList<HashMap>) listOfTasks, id, 1);
+        Epic epic = (Epic) taskGetter.getById(listOfTasks, id, 1);
         inMemoryHistoryManager.add(epic);
         return epic;
     }
 
     @Override
     public Subtask getSubtaskById(int id) {
-        Subtask subtask = (Subtask) taskGetter.getById((ArrayList<HashMap>) listOfTasks, id, 2);
+        Subtask subtask = (Subtask) taskGetter.getById(listOfTasks, id, 2);
         inMemoryHistoryManager.add(subtask);
         return subtask;
     }
 
     @Override
     public void updateTask(Task task, int id) {
-        taskUpdater.updateById(task, id, (ArrayList<HashMap>) listOfTasks, 0);
+        taskUpdater.updateById(task, id, (List) listOfTasks, 0);
     }
 
     @Override
     public void updateEpic(Epic epic, int id) {
-        taskUpdater.updateById(epic, id, (ArrayList<HashMap>) listOfTasks, 1);
+        taskUpdater.updateById(epic, id, (List) listOfTasks, 1);
     }
 
     @Override
     public void updateSubtask(Subtask subtask, int id) {
-        taskUpdater.updateById(subtask, id, (ArrayList<HashMap>) listOfTasks, 2);
+        taskUpdater.updateById(subtask, id, (List) listOfTasks, 2);
     }
 
     @Override
@@ -181,8 +173,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Collection<Integer> getAllSubtasksFromEpic(int id) {
-        Collection listOfSubtasks = taskGetter.getListOfSubtasks(epicHashMap, id);
-        return listOfSubtasks;
+        return taskGetter.getListOfSubtasks(epicHashMap, id);
     }
 
     @Override
