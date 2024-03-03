@@ -12,7 +12,7 @@ import java.util.*;
 public class HttpTaskManager extends FileBackedTaskManager {
 
     private final KVTaskClient client;
-    private final com.google.gson.Gson gson= new Gson().GsonTaskBuilder();;
+    private final com.google.gson.Gson gson= new Gson().GsonTaskBuilder();
 
     public HttpTaskManager(URI url) throws IOException, InterruptedException {
         super(new File("save.csv"));

@@ -13,15 +13,16 @@ import java.util.Objects;
 public class EpicTimeVerification {
     public void verifyTime(Epic epic, Map<Integer, Subtask> subtaskHashMap) {
 
-        LocalDateTime epicStartTime = epic.getIdSubTasks().stream()
+        LocalDateTime epicStartTime = Objects.requireNonNull(epic.getIdSubTasks().stream()
                 .map(subtaskHashMap::get)
                 .min(Comparator.comparing(Task::getStartTime, Comparator.nullsFirst(Comparator.reverseOrder())))
-                .stream().findFirst().get().getStartTime();
+                .stream().findFirst().orElse(null)).getStartTime();
+
         if (epicStartTime != null) {
-            LocalDateTime epicEndTime = epic.getIdSubTasks().stream()
+            LocalDateTime epicEndTime = Objects.requireNonNull(epic.getIdSubTasks().stream()
                     .map(subtaskHashMap::get)
                     .max(Comparator.comparing(Task::getEndTime))
-                    .stream().findFirst().get().getEndTime();
+                    .stream().findFirst().orElse(null)).getEndTime();
 
             epic.setStartTime(epicStartTime);
             epic.setDuration(Duration.between(epicStartTime, epicEndTime));

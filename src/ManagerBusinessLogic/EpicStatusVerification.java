@@ -26,8 +26,8 @@ public class EpicStatusVerification {
             Subtask subtask = subtaskHashMap.get(idSubtask);
             firstSubtaskStatus = subtask.getStatus();
 
-            for (Integer idsecondSubtask : listOfSubTasks) {
-                subtask = subtaskHashMap.get(idsecondSubtask);
+            for (Integer idSecondSubtask : listOfSubTasks) {
+                subtask = subtaskHashMap.get(idSecondSubtask);
 
                 if (firstSubtaskStatus != subtask.getStatus()) {
                     epic.setStatus(Status.IN_PROGRESS);

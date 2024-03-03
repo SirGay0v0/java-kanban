@@ -4,9 +4,7 @@ import Tasks.Epic;
 import Tasks.Subtask;
 import Tasks.Task;
 
-
-import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 
 /**
  * Класс обновляет существующей экземпляр по его id.
@@ -15,19 +13,32 @@ import java.util.List;
  */
 public class TaskUpdater {
 
-    public void updateById(Task task, int idTask, List<HashMap> listOfTasks, int option) {
-
-        if (listOfTasks.get(option).containsKey(idTask)) {
-
+    public void updateTaskById(Task task, int idTask, Map<Integer, Task> taskMap) {
+        if (taskMap.containsKey(idTask)) {
             task.setId(idTask);
-            listOfTasks.get(option).put(idTask, task);
-
-            if (option == 2) {
-                EpicStatusVerification epicStatusVerification = new EpicStatusVerification();
-                Epic epic = (Epic) listOfTasks.get(1).get(((Subtask) task).getEpicOwnerId());
-
-                epicStatusVerification.verifyStatus(epic, listOfTasks.get(2));
-            }
+            taskMap.put(idTask, task);
         }
     }
+
+    public void updateEpicById(Epic epic, int idEpic, Map<Integer, Epic> epicMap) {
+        if (epicMap.containsKey(idEpic)) {
+            epic.setId(idEpic);
+            epicMap.put(idEpic, epic);
+        }
+    }
+
+    public void updateSubtaskById(Subtask subtask, int idSubtask, Map<Integer, Subtask> subtaskMap,
+                                  Map<Integer, Epic> epicMap) {
+        if (subtaskMap.containsKey(idSubtask)) {
+            EpicStatusVerification epicStatusVerification = new EpicStatusVerification();
+
+            subtask.setId(idSubtask);
+            subtaskMap.put(idSubtask, subtask);
+
+            Epic epic = epicMap.get(subtaskMap.get(idSubtask).getEpicOwnerId());
+            epicStatusVerification.verifyStatus(epic, subtaskMap);
+
+        }
+    }
+
 }

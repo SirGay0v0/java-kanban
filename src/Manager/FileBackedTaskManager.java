@@ -10,7 +10,6 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.*;
-
 /**
  * Класс реализующий интерфейс TaskManager.
  * Отличается тем, что хранит историю просмотра в файле указанном при создании класса.
@@ -181,9 +180,8 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         } catch (IOException ex) {
             throw new ManagerLoadException();
         }
-        taskHashMap.values().stream().map(priorityTree::add);
-        subtaskHashMap.values().stream().map(priorityTree::add);
-//        epicHashMap.values().stream().map(priorityTree::add);
+        priorityTree.addAll(taskHashMap.values());
+        priorityTree.addAll(subtaskHashMap.values());
     }
 
     /**

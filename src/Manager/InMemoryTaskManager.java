@@ -24,7 +24,7 @@ public class InMemoryTaskManager implements TaskManager {
     protected Map<Integer, Task> taskHashMap = new HashMap<>();
     protected Map<Integer, Epic> epicHashMap = new HashMap<>();
     protected Map<Integer, Subtask> subtaskHashMap = new HashMap<>();
-    protected final HistoryManager inMemoryHistoryManager= new InMemoryHistoryManager();
+    protected final HistoryManager inMemoryHistoryManager = new InMemoryHistoryManager();
     private final TaskGetter taskGetter = new TaskGetter();
     private final TaskCreator taskCreator = new TaskCreator();
     private final TaskDeleter taskDeleter = new TaskDeleter();
@@ -75,7 +75,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void createSubtask(Subtask subtask) {
         Collection<? extends Task> set = getPrioritizedTasks();
         if (timeValidation.validate(subtask, set) != null) {
-            taskCreator.createSubtask(listOfTasks, subtask, id);
+            taskCreator.createSubtask1(epicHashMap, subtaskHashMap,subtask,id);
             id++;
             priorityTree.add(subtask);
         } else System.out.println("Задача не была создана, ввиду пересечения по времени" +
@@ -94,7 +94,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Collection<Subtask> getSubtasks() {
-        return taskGetter.getAllSubtasks( subtaskHashMap);
+        return taskGetter.getAllSubtasks(subtaskHashMap);
     }
 
 
@@ -136,17 +136,17 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void updateTask(Task task, int id) {
-        taskUpdater.updateById(task, id, (List) listOfTasks, 0);
+        taskUpdater.updateTaskById(task, id, taskHashMap);
     }
 
     @Override
     public void updateEpic(Epic epic, int id) {
-        taskUpdater.updateById(epic, id, (List) listOfTasks, 1);
+        taskUpdater.updateEpicById(epic, id, epicHashMap);
     }
 
     @Override
     public void updateSubtask(Subtask subtask, int id) {
-        taskUpdater.updateById(subtask, id, (List) listOfTasks, 2);
+        taskUpdater.updateSubtaskById(subtask, id, subtaskHashMap, epicHashMap);
     }
 
     @Override
